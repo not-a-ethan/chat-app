@@ -1,0 +1,26 @@
+.room {
+    display: grid;
+    grid-template-columns: 9fr 1fr;
+
+    height: 95vh;
+    width: 100%;
+
+    overflow-x: hidden;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    border-bottom: #4E87B7 solid 2px;
+}
+
+.messages {
+    grid-column: 1;
+}
+
+.people {
+    grid-column: 2;
+
+    padding: 1px;
+    border-left: #4E87B7 solid 2px;
+}
