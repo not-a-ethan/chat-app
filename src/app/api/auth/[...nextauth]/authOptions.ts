@@ -6,11 +6,13 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import GitHubProvider from "next-auth/providers/github";
 
 export const authOptions: NextAuthOptions = {
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.AUTH_SECRET,
   providers: [
+    /*
         CredentialsProvider({
           // The name to display on the sign in form (e.g. 'Sign in with...')
           name: 'Sign in with Username/Password',
+
           // The credentials is used to generate a suitable form on the sign in page.
           // You can specify whatever fields you are expecting to be submitted.
           // e.g. domain, username, password, 2FA token, etc.
@@ -19,6 +21,7 @@ export const authOptions: NextAuthOptions = {
             username: { label: "Username", type: "text", placeholder: "John Doe" },
             password: { label: "Password", type: "password" }
           },
+
           async authorize(credentials, req) {
             // You need to provide your own logic here that takes the credentials
             // submitted and returns either a object representing a user or value
@@ -41,9 +44,27 @@ export const authOptions: NextAuthOptions = {
             return null
           }
         }),
+        */
         GitHubProvider({
           clientId: process.env.GITHUB_ID!,
           clientSecret: process.env.GITHUB_SECRET!
         })
-      ]
+      ],
+      callbacks: {
+        async signIn({ user, account, profile, email, credentials }) {
+          const response = await fetch("http://localhost:3001/api/accounts/exists", {
+            method: 'POST',
+            body: JSON.stringify(credentials),
+            headers: { "Content-Type": "application/json" }
+          })
+
+          //response.json().then(data => console.log(data));
+
+          return true;
+        },
+        session: async ({ session, user, token }) => {
+          // Read EXTERNAL ID with `user.token.sub` or `user.token.sub`
+          return session;
+       },
+      }
 }
