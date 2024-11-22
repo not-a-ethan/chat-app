@@ -49,6 +49,7 @@ export const authOptions: NextAuthOptions = {
         }),
         */
         GitHubProvider({
+          id: "github",
           clientId: process.env.GITHUB_ID!,
           clientSecret: process.env.GITHUB_SECRET!
         })
@@ -65,7 +66,27 @@ export const authOptions: NextAuthOptions = {
           //response.json().then(data => console.log(data));
           */
 
-          const response = accountExists("sso", "not-a-ethan" , 92686703)
+          console.log(user)
+          console.log()
+          console.log(account)
+          console.log()
+          console.log(profile)
+
+          let type: string;
+          let provider: string;
+          let externalID: Number;
+
+          if (account?.type == 'oauth') {
+            type = "sso";
+            provider = account?.provider;
+            externalID = Number(account?.id);
+          } else {
+            type = "credentials";
+            provider = "username"; // fix this
+            externalID = -1;
+          }
+
+          const response = accountExists(type, provider, externalID)
 
           return true;
         },
