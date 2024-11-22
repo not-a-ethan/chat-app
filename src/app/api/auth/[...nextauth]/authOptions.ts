@@ -5,6 +5,9 @@ import {type NextAuthOptions} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
 import GitHubProvider from "next-auth/providers/github";
 
+// functions
+import { accountExists } from "../../../../lib/accountExists"
+
 export const authOptions: NextAuthOptions = {
   secret: process.env.AUTH_SECRET,
   providers: [
@@ -52,6 +55,7 @@ export const authOptions: NextAuthOptions = {
       ],
       callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
+          /*
           const response = await fetch("http://localhost:3001/api/accounts/exists", {
             method: 'POST',
             body: JSON.stringify(credentials),
@@ -59,6 +63,9 @@ export const authOptions: NextAuthOptions = {
           })
 
           //response.json().then(data => console.log(data));
+          */
+
+          const response = accountExists("sso", "not-a-ethan" , 92686703)
 
           return true;
         },
