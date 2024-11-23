@@ -20,13 +20,13 @@ export async function accountExists(type: string, provider: string, ssoID: Numbe
         '2FA': String | null;
         passkey: String | null;
         rooms: String | null;
-    }
+    };
 
     const user: readonly userType[] = await getAll(query) as unknown as readonly userType[];
 
     if (user.length > 0) {
         return true;
-    }
+    };
 
     return false;
-}
+};

@@ -56,24 +56,6 @@ export const authOptions: NextAuthOptions = {
       ],
       callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
-          /*
-          const response = await fetch("http://localhost:3001/api/accounts/exists", {
-            method: 'POST',
-            body: JSON.stringify(credentials),
-            headers: { "Content-Type": "application/json" }
-          })
-
-          //response.json().then(data => console.log(data));
-          */
-
-          /*
-          console.log(user)
-          console.log()
-          console.log(account)
-          console.log()
-          console.log(profile)
-          */
-
           let type: string;
           let provider: string;
           let externalID: Number;
@@ -88,7 +70,7 @@ export const authOptions: NextAuthOptions = {
             externalID = -1;
           }
 
-          const response = accountExists(type, provider, externalID)
+          const response = accountExists(type, provider, externalID);
 
           return true;
         },
@@ -97,4 +79,4 @@ export const authOptions: NextAuthOptions = {
           return session;
        },
       }
-}
+};
