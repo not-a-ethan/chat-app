@@ -66,11 +66,13 @@ export const authOptions: NextAuthOptions = {
           //response.json().then(data => console.log(data));
           */
 
+          /*
           console.log(user)
           console.log()
           console.log(account)
           console.log()
           console.log(profile)
+          */
 
           let type: string;
           let provider: string;
@@ -79,7 +81,7 @@ export const authOptions: NextAuthOptions = {
           if (account?.type == 'oauth') {
             type = "sso";
             provider = account?.provider;
-            externalID = Number(account?.id);
+            externalID = Number(account?.providerAccountId);
           } else {
             type = "credentials";
             provider = "username"; // fix this

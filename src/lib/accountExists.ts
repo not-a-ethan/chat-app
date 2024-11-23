@@ -3,7 +3,7 @@ import { getAll } from "@/app/database/get";
 export async function accountExists(type: string, provider: string, ssoID: Number) {    
     let query;
     if (type === "sso") {
-        query = `SELECT * FROM users WHERE externalID=${ssoID} AND sso_pro=${provider};`
+        query = `SELECT * FROM users WHERE externalID=${ssoID} AND sso_pro='${provider}';`
     } else if (type === "credentials") {
         query = `SELECT * FROM users WHERE username=${provider};`
     } else {
