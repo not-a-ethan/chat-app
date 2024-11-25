@@ -1,19 +1,19 @@
-'use client'
+import { getSession } from "next-auth/react"
 
 import Providers from "./providers";
 
 import "./styles/globals.css";
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const session = await getSession()
+
   return (
     <html lang="en">
-      <Providers session={null}>
-          {children}
-      </Providers>
+        <body>
+            <Providers session={session}>
+                {children}
+            </Providers>
+        </body>
     </html>
   );
 }

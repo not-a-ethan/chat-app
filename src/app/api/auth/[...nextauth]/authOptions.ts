@@ -80,10 +80,6 @@ export const authOptions: NextAuthOptions = {
           }
 
           return true;
-        },
-        session: async ({ session, user, token }) => {
-          // Read EXTERNAL ID with `user.token.sub` or `user.token.sub`
-          return session;
-       },
+        }
       }
 };
