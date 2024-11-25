@@ -7,6 +7,7 @@ import GitHubProvider from "next-auth/providers/github";
 
 // functions
 import { accountExists } from "../../../../lib/accountExists"
+import { createAccount } from "@/lib/createAccount";
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.AUTH_SECRET,
@@ -57,18 +58,26 @@ export const authOptions: NextAuthOptions = {
           let type: string;
           let provider: string;
           let externalID: Number;
+          let username: String;
 
           if (account?.type == 'oauth') {
             type = "sso";
             provider = account?.provider;
             externalID = Number(account?.providerAccountId);
+            username = profile?.login;
           } else {
-            type = "credentials";
-            provider = "username"; // fix this
-            externalID = -1;
+            if (user) {
+              return true;
+            } else {
+              return false;
+            }
           }
 
-          const response = accountExists(type, provider, externalID);
+          const response = await accountExists(type, provider, externalID);
+
+          if (!response) {
+            const account = await createAccount("sso", username, null, provider, externalID);
+          }
 
           return true;
         },
