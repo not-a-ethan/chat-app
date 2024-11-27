@@ -50,9 +50,16 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const roomID: Number = body["roomID"] | 1;
     const messageContent: String = body["content"];
 
-    console.log(username)
+    if (typeof roomID !== Number) {
+        return NextResponse.json(
+            JSON.stringify({"error": "roomID is not a number"}),
+            { status: 400 }
+        )
+    }
 
-    const response = await changeDB(`INSERT INTO messages (author, content, roomID) values ('${username}', '${messageContent}', ${roomID})`)
+
+
+    const response = await changeDB(`INSERT INTO messages (author, content, roomID) values ($username, $content, $id)`, {username: username, content: messageContent, id: roomID})
 
     console.log(response)
 
