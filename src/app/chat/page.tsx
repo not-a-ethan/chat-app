@@ -7,25 +7,20 @@ import React from "react";
 import { useSession } from "next-auth/react"
 
 import styles from "../styles/chat.module.css";
+import { METHODS } from 'http';
 
 export default function Home() {
   const { data: session, status } = useSession()
   const router = useRouter();
 
-  //console.log(status)
-  console.log(session)
-  console.log(status)
-
-  /*
   if (status === "loading") {
     return <p>Loading</p>
   }
 
   if (status === "unauthenticated") {
-    //router.replace("/api/auth/signin");
+    router.replace("/api/auth/signin");
     return (<p>Access Denied</p>);
   }
-    */
 
   return (
     <>
