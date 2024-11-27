@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react"
 
 import styles from "../styles/chat.module.css";
 import { METHODS } from 'http';
+import { rootCertificates } from 'tls';
 
 export default function Home() {
   const { data: session, status } = useSession()
@@ -21,6 +22,17 @@ export default function Home() {
     router.replace("/api/auth/signin");
     return (<p>Access Denied</p>);
   }
+
+  /*
+
+  fetch("http://localhost:3001/api/message/create", {
+    method: "POST",
+    body: JSON.stringify({
+      "roomID": 1,
+      "content": "Some Content"
+    })
+  })
+    */
 
   return (
     <>

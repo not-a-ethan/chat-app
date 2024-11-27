@@ -5,7 +5,7 @@ import { getToken } from "next-auth/jwt"
 import { getAll } from "@/app/database/get"
 import { changeDB } from "@/app/database/change"
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest, res: NextResponse) {
     const token = await getToken({ req })
 
     if (!token) {
@@ -39,7 +39,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     if (token.sub) {
         externalID = token.sub;
-        username = getAll(`SELECT * FROM users WHERE externalID=${externalID}`)
+        username = await getAll(`SELECT * FROM users WHERE externalID=${externalID}`);
+        username = username[0].username;
     } else {
         externalID = NaN;
         username = "";
@@ -49,7 +50,9 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const roomID: Number = body["roomID"] | 1;
     const messageContent: String = body["content"];
 
-    const response = changeDB(`INSERT INTO messages (author, content, roomID) values (${username}, ${messageContent}, ${roomID}`)
+    console.log(username)
+
+    const response = await changeDB(`INSERT INTO messages (author, content, roomID) values ('${username}', '${messageContent}', ${roomID})`)
 
     console.log(response)
 
