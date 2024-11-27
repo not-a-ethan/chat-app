@@ -24,7 +24,6 @@ export default function Home() {
   }
 
   /*
-
   fetch("http://localhost:3001/api/message/create", {
     method: "POST",
     body: JSON.stringify({
@@ -32,7 +31,7 @@ export default function Home() {
       "content": "Some Content"
     })
   })
-    */
+  */
 
   return (
     <>

@@ -30,10 +30,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
    */
 
-    console.log("\n")
-    console.log(token)
-    console.log("\n")
-
     let externalID;
     let username;
 
@@ -46,22 +42,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
         username = "";
     }
 
+
     const body = await req.json();
-    const roomID: Number = body["roomID"] | 1;
+    const roomID: Number = body["roomID"];
     const messageContent: String = body["content"];
 
-    if (typeof roomID !== Number) {
-        return NextResponse.json(
-            JSON.stringify({"error": "roomID is not a number"}),
-            { status: 400 }
-        )
-    }
-
-
-
-    const response = await changeDB(`INSERT INTO messages (author, content, roomID) values ($username, $content, $id)`, {username: username, content: messageContent, id: roomID})
-
-    console.log(response)
+    const response = await changeDB(`INSERT INTO messages (author, 'content', roomID) values ($username, $content, $id)`, {$username: username, $content: messageContent, $id: roomID})
 
     return NextResponse.json(
         JSON.stringify(body),
