@@ -47,7 +47,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const messageID: Number = body["messageID"];
     const newMessageContent: String = body["content"];
 
-    const messageQuery = "SELECT * FROM messages WHERE 'author'=$id AND 'id'=$messageid";
+    const messageQuery: String = "SELECT * FROM messages WHERE 'author'=$id AND 'id'=$messageid";
     const message = await getAll(messageQuery, {"$id": id, "$messageID": messageID})
 
     if (message.length === 0) {
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         )
     }
 
-    const query = "UPDATE users SET 'content'='$message' WHERE 'messageID'=$messageID AND 'author'=$authorID"
+    const query: String = "UPDATE users SET 'content'='$message' WHERE 'messageID'=$messageID AND 'author'=$authorID"
     const response = await changeDB(query, {$message: newMessageContent, $messageID: messageID, $authorID: id})
 
     return NextResponse.json(
