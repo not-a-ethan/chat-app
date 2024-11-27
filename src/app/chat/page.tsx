@@ -7,8 +7,6 @@ import React from "react";
 import { useSession } from "next-auth/react"
 
 import styles from "../styles/chat.module.css";
-import { METHODS } from 'http';
-import { rootCertificates } from 'tls';
 
 export default function Home() {
   const { data: session, status } = useSession()
