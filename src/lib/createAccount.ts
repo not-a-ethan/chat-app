@@ -8,7 +8,6 @@ export function createAccount(type: String, username: String, password: String|n
     } else if (type === "credentials") {
         query = `INSERT INTO users (username, password) VALUES ('${username}', '${password}');`
     } else {
-        console.log("this")
         return false;
     }
 
