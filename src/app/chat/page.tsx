@@ -8,7 +8,6 @@ import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react"
 
 import styles from "../styles/chat.module.css";
-
 export default function Home() {
   const { data: session, status } = useSession()
   const router = useRouter();
@@ -80,7 +79,6 @@ export default function Home() {
 
       try {
           id = e.target.id;
-          
       } catch (error) {
           console.log(error)
           return;
