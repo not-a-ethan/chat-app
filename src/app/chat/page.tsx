@@ -43,6 +43,29 @@ export default function Home() {
     }).then(response => response.status !== 200 ? console.log("Something went wrong"): textAreaElm.value = "")
   }
 
+  function getRooms() {
+    let data: any;
+
+    let rooms;
+
+    fetch("../api/rooms/getAll", {
+      method: "GET"
+    })
+    .then(response => data = response)
+    .then(response => response.json())
+    .then(jsonData => {
+      if (data.status !== 200) {
+        console.log("Something went wrong")
+      }
+
+      rooms = jsonData["rooms"].split(",")
+    })
+
+    /*
+    Render rooms here
+    */
+  }
+
   return (
     <>
       <div className={styles.room}>
