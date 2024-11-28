@@ -42,10 +42,18 @@ export async function POST(req: NextRequest, res: NextResponse) {
         username = "";
     }
 
-
     const body = await req.json();
     const roomID: Number = body["roomID"];
     const messageContent: String = body["content"];
+
+    if (messageContent.trim() === "") {
+        return NextResponse.json(
+            JSON.stringify({
+                "error": "Empty message"
+            }),
+            { status: 400 }
+        )
+    }
 
     const response = await changeDB(`INSERT INTO messages (author, 'content', roomID) values ($username, $content, $id)`, {$username: username, $content: messageContent, $id: roomID})
 
