@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import Image from 'next/image';
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useSession } from "next-auth/react"
 
@@ -16,6 +16,58 @@ export default function Home() {
   const router = useRouter();
 
   const [room, setRoom] = useState(0);
+  const [roomsRendered, setRoomsRenderd] = useState(false);
+
+  function getRooms(divElement: HTMLDivElement) {
+    if (roomsRendered) {
+      return;
+    } else {
+      let data: any;
+      let rooms = '';
+
+      if (divElement === null) {
+        return;
+      }
+
+      fetch("../api/rooms/get", {
+        method: "GET"
+      })
+      .then(response => data = response)
+      .then(response => response.json())
+      .then(jsonData => {
+        jsonData = JSON.parse(jsonData)
+        if (data.status !== 200) {
+          console.log("Something went wrong")
+        }
+
+        rooms = jsonData["rooms"]
+        const roomsArray = rooms.split(",")
+
+        if (rooms.length === 0) {} else if (rooms.length === 1) {
+          const room = document.createElement("span");
+          room.className = styles.singleRoom;
+          room.innerText = roomsArray[0]
+
+          divElement.appendChild(room)
+        } else {
+          const numRooms = roomsArray.length;
+
+          const rooms = <></>
+
+          for (let i = 0; i < numRooms; i++) {
+
+          }
+        }   
+      })
+      setRoomsRenderd(true);
+    }
+  }
+
+  useEffect(() => {
+    if (roomsRendered) return;
+    const divElement: HTMLDivElement = document.getElementById('roomList');
+    getRooms(divElement);
+  })
 
   if (status === "loading") {
     return <p>Loading</p>
@@ -43,29 +95,6 @@ export default function Home() {
     }).then(response => response.status !== 200 ? console.log("Something went wrong"): textAreaElm.value = "")
   }
 
-  function getRooms() {
-    let data: any;
-
-    let rooms;
-
-    fetch("../api/rooms/getAll", {
-      method: "GET"
-    })
-    .then(response => data = response)
-    .then(response => response.json())
-    .then(jsonData => {
-      if (data.status !== 200) {
-        console.log("Something went wrong")
-      }
-
-      rooms = jsonData["rooms"].split(",")
-    })
-
-    /*
-    Render rooms here
-    */
-  }
-
   return (
     <>
       <div className={styles.room}>
@@ -86,8 +115,10 @@ export default function Home() {
 
         <div className={styles.people}>
           <p>People in room</p>
-        </div>
+        </div>     
       </div>
+
+      <div className={`${styles.rooms}`} id="roomList"></div>
     </>
   );
 }

@@ -27,6 +27,26 @@
     border-left: #4E87B7 solid 2px;
 }
 
+.rooms {
+    height: calc(5vh - 2px);
+    width: 100vw;
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    overflow: hidden;
+}
+
+.singleRoom {
+    border-style: solid;
+    border-color: var(--dark-background-secondary);
+    
+    margin-left: 0.5vw;
+    
+    vertical-align: middle;
+}
+
 .messageInput {
     position: absolute;
     bottom: 2.5%;
