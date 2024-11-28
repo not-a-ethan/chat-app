@@ -43,10 +43,14 @@ export default function Home() {
         rooms = jsonData["rooms"]
         const roomsArray = rooms.split(",")
 
+        setRoom(Number(roomsArray[0]));
+
         if (rooms.length === 0) {} else if (rooms.length === 1) {
           const room = document.createElement("span");
           room.className = styles.singleRoom;
           room.innerText = roomsArray[0]
+          room.id = roomsArray[0];
+          room.onclick = setRoomFunc;
 
           divElement.appendChild(room)
         } else {
@@ -56,6 +60,8 @@ export default function Home() {
             const room = document.createElement("span");
             room.className = styles.singleRoom;
             room.innerText = roomsArray[i]
+            room.id = roomsArray[i];
+            room.onclick = setRoomFunc;
 
             divElement.appendChild(room)
           }
@@ -70,6 +76,20 @@ export default function Home() {
     const divElement: HTMLDivElement = document.getElementById('roomList');
     getRooms(divElement);
   })
+
+  function setRoomFunc(e: any) {
+      let id;
+
+      try {
+          id = e.target.id;
+          
+      } catch (error) {
+          console.log(error)
+          return;
+      }
+
+      setRoom(id)
+}
 
   if (status === "loading") {
     return <p>Loading</p>
