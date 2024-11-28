@@ -4,7 +4,6 @@ import { getToken } from "next-auth/jwt"
 
 import { getAll } from "@/app/database/get"
 import { changeDB } from "@/app/database/change"
-import { error } from 'console'
 
 export async function POST(req: NextRequest, res: NextResponse) {
     const token = await getToken({ req })

@@ -9,8 +9,6 @@ import { useSession } from "next-auth/react"
 
 import styles from "../styles/chat.module.css";
 
-import { send } from 'process';
-
 export default function Home() {
   const { data: session, status } = useSession()
   const router = useRouter();
