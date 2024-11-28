@@ -52,10 +52,12 @@ export default function Home() {
         } else {
           const numRooms = roomsArray.length;
 
-          const rooms = <></>
-
           for (let i = 0; i < numRooms; i++) {
+            const room = document.createElement("span");
+            room.className = styles.singleRoom;
+            room.innerText = roomsArray[i]
 
+            divElement.appendChild(room)
           }
         }   
       })
