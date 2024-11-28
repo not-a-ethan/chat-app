@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import Image from 'next/image';
 
-import React from "react";
+import React, { useState } from "react";
 
 import { useSession } from "next-auth/react"
 
@@ -15,6 +15,8 @@ export default function Home() {
   const { data: session, status } = useSession()
   const router = useRouter();
 
+  const [room, setRoom] = useState(-1);
+
   if (status === "loading") {
     return <p>Loading</p>
   }
@@ -24,15 +26,22 @@ export default function Home() {
     return (<p>Access Denied</p>);
   }
 
-  /*
-  fetch("http://localhost:3001/api/message/create", {
-    method: "POST",
-    body: JSON.stringify({
-      "roomID": 1,
-      "content": "Some Content"
-    })
-  })
-  */
+  function createMessage() {
+    const textAreaElm: any = document.getElementById("messageContent");
+    const messageContent: String = textAreaElm?.value;
+
+    if (messageContent.trim() === "") {
+      return;
+    }
+    
+    fetch("../api/message/create", {
+      method: "POST",
+      body: JSON.stringify({
+        "roomID": room,
+        "content": messageContent
+      })
+    }).then(response => response.status !== 200 ? console.log("Some went wrong"): textAreaElm.value = "")
+  }
 
   return (
     <>
@@ -41,11 +50,13 @@ export default function Home() {
           <p>Messages</p>
 
           <div className={`${styles.messageInput}`} >
-            <textarea className={`${styles.textArea}`}></textarea>
+            <textarea className={`${styles.textArea}`} id="messageContent"></textarea>
+
             <img
               src={`/arrow-right.svg`}
               alt="Right arrow to send the message"
               className={`${styles.sendButton}`}
+              onClick={createMessage}
             />
           </div>
         </div>
