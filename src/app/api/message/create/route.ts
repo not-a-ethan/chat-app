@@ -4,6 +4,7 @@ import { getToken } from "next-auth/jwt"
 
 import { getAll } from "@/app/database/get"
 import { changeDB } from "@/app/database/change"
+import { error } from 'console'
 
 export async function POST(req: NextRequest, res: NextResponse) {
     const token = await getToken({ req })
@@ -46,12 +47,34 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const roomID: Number = body["roomID"];
     const messageContent: String = body["content"];
 
+     if (roomID == 0) {
+        return NextResponse.json(
+            JSON.stringify({
+                error: `Hey that room is not allowed. 0 Is just to make the DB happy so every user is "in" atleast one room.`
+            }),
+            { status: 418 }
+        )
+     }
+
     if (messageContent.trim() === "") {
         return NextResponse.json(
             JSON.stringify({
                 "error": "Empty message"
             }),
             { status: 400 }
+        )
+    }
+
+
+    let rooms = await getAll(`SELECT * FROM users WHERE username=$username`, {"$username": username});
+    rooms = rooms[0]["rooms"];
+    
+    if (!rooms.includes(roomID)) {
+        return NextResponse.json(
+            JSON.stringify({
+                "error": "Not in room"
+            }),
+            { status: 403}
         )
     }
 

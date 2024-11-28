@@ -15,7 +15,7 @@ export default function Home() {
   const { data: session, status } = useSession()
   const router = useRouter();
 
-  const [room, setRoom] = useState(-1);
+  const [room, setRoom] = useState(0);
 
   if (status === "loading") {
     return <p>Loading</p>
@@ -40,7 +40,7 @@ export default function Home() {
         "roomID": room,
         "content": messageContent
       })
-    }).then(response => response.status !== 200 ? console.log("Some went wrong"): textAreaElm.value = "")
+    }).then(response => response.status !== 200 ? console.log("Something went wrong"): textAreaElm.value = "")
   }
 
   return (
