@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import Image from 'next/image';
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 
 import { useSession } from "next-auth/react"
 
@@ -15,6 +15,7 @@ export default function Home() {
   const [room, setRoom] = useState(0);
   const [roomsRendered, setRoomsRenderd] = useState(false);
   const [messages, setMessages] = useState(<></>)
+  const [users, setUsers] = useState(<></>);
 
   function getRooms(divElement: HTMLDivElement) {
     if (roomsRendered) {
@@ -105,10 +106,40 @@ export default function Home() {
     })
   }
 
+  function getActiveMembers() {
+    let data: any;
+
+    fetch(`../api/rooms/activeMembers?roomID=${room}`, {
+      method: "GET"
+    })
+    .then(response => data = response)
+    .then(response => response.json())
+    .then(jsonData => {
+      if (data.status !== 200) {
+        console.log("Something went wrong")
+        return;
+      }
+
+      jsonData = JSON.parse(jsonData)
+
+      const users: Array<String> = jsonData['users'];
+
+      setUsers(
+        <div>
+          {users.map((user: any) => (
+            <div key={user}>{user}</div>
+          ))}
+        </div>
+      )
+    })
+  }
+
   useEffect(() => {
     loadMessages();
+    getActiveMembers();
 
     setInterval(loadMessages, 5000);
+    setInterval(getActiveMembers, 5000);
   }, [room])  
 
   function setRoomFunc(e: any) {
@@ -172,9 +203,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className={styles.people}>
-          <p>People in room</p>
-        </div>     
+        <div className={styles.people} id="people">{users}</div>     
       </div>
 
       <div className={`${styles.rooms}`} id="roomList"></div>
