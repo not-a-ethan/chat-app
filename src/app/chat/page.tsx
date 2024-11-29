@@ -136,7 +136,7 @@ export default function Home() {
 
   function createMessage() {
     const textAreaElm: any = document.getElementById("messageContent");
-    const messageContent: String = textAreaElm?.value;
+    const messageContent: string = textAreaElm?.value;
 
     if (messageContent.trim() === "") {
       return;
@@ -148,7 +148,15 @@ export default function Home() {
         "roomID": room,
         "content": messageContent
       })
-    }).then(response => response.status !== 200 ? console.log("Something went wrong"): textAreaElm.value = "")
+    }).then(response => {
+      return response.status !== 200 ? "Something went wrong": textAreaElm.value = ""
+    })
+
+    const messageBox: HTMLDivElement = document.getElementById("messageBox");
+    const message = document.createElement("div");
+    message.innerText = messageContent;
+
+    messageBox.appendChild(message);
   }
 
   return (
