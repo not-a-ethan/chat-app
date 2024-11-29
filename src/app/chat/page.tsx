@@ -7,6 +7,7 @@ import React, { useState, useEffect, createContext } from "react";
 import { useSession } from "next-auth/react"
 
 import Chat from './components/chat';
+import ActiveUsers from './components/activeUsers';
 
 import styles from "../styles/chat.module.css";
 
@@ -80,47 +81,6 @@ export default function Home() {
     getRooms(divElement);
   })
 
-  function getActiveMembers() {
-    if (!document.hasFocus()) return;
-    let data: any;
-
-    if (Number(sessionStorage.getItem("room")) == 0) return;
-
-    fetch(`../api/rooms/activeMembers?roomID=${room}`, {
-      method: "GET"
-    })
-    .then(response => data = response)
-    .then(response => response.json())
-    .then(jsonData => {
-      if (data.status !== 200) {
-        console.log("Something went wrong")
-        return;
-      }
-
-      jsonData = JSON.parse(jsonData)
-
-      const users: Array<String> = jsonData['users'];
-
-      setUsers(
-        <div>
-          {users.map((user: any) => (
-            <div key={user}>{user}</div>
-          ))}
-        </div>
-      )
-    })
-  }
-
-  let memberInterval = setInterval(Math.random, 10000);
-
-  useEffect(() => {
-    clearInterval(memberInterval);
-
-    getActiveMembers();
-
-    memberInterval = setInterval(getActiveMembers, 5000);
-  }, [room])  
-
   function setRoomFunc(e: any) {
       let id;
 
@@ -165,28 +125,28 @@ export default function Home() {
 
   return (
     <>
-      <div className={styles.room}>
-        <div className={styles.messages}>
-          <Room.Provider value={room}>
-            <Chat /*ref={chatRef}*/ />
-          </Room.Provider>
+      <Room.Provider value={room}>
+        <div className={styles.room}>
+          <div className={styles.messages}>
+            <Chat />
+            
+            <div className={`${styles.messageInput}`} >
+              <textarea className={`${styles.textArea}`} id="messageContent"></textarea>
 
-          <div className={`${styles.messageInput}`} >
-            <textarea className={`${styles.textArea}`} id="messageContent"></textarea>
-
-            <img
-              src={`/arrow-right.svg`}
-              alt="Right arrow to send the message"
-              className={`${styles.sendButton}`}
-              onClick={createMessage}
-            />
+              <img
+                src={`/arrow-right.svg`}
+                alt="Right arrow to send the message"
+                className={`${styles.sendButton}`}
+                onClick={createMessage}
+              />
+            </div>
           </div>
+
+          <div className={styles.people} id="people"><ActiveUsers /></div>     
         </div>
 
-        <div className={styles.people} id="people">{users}</div>     
-      </div>
-
-      <div className={`${styles.rooms}`} id="roomList"></div>
+        <div className={`${styles.rooms}`} id="roomList"></div>
+      </Room.Provider>
     </>
   );
 }
