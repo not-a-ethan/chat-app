@@ -6,7 +6,7 @@ import { Room } from "../page";
 
 const Chat = forwardRef((props: any, ref: any) => {
     const [messages, setMessages] = useState(<></>)
-    const room = useContext(Room)
+    const [room, setRoom] = useContext(Room)
 
     function loadMessages() {
         if (!document.hasFocus()) return;

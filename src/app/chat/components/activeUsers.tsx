@@ -7,7 +7,7 @@ import { Room } from "../page";
 export default function ActiveUsers() {
     const [users, setUsers] = useState(<></>);
 
-    const room = useContext(Room)
+    const [room, setRoom] = useContext(Room)
 
     function getActiveMembers() {
         if (!document.hasFocus()) return;
