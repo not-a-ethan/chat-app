@@ -1,20 +1,23 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import Image from 'next/image';
 
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect, createContext } from "react";
 
 import { useSession } from "next-auth/react"
 
+import Chat from './components/chat';
+
 import styles from "../styles/chat.module.css";
+
+export const Room = createContext(0);
+
 export default function Home() {
   const { data: session, status } = useSession()
   const router = useRouter();
 
   const [room, setRoom] = useState(0);
   const [roomsRendered, setRoomsRenderd] = useState(false);
-  const [messages, setMessages] = useState(<></>)
   const [users, setUsers] = useState(<></>);
 
   function getRooms(divElement: HTMLDivElement) {
@@ -43,6 +46,7 @@ export default function Home() {
         const roomsArray = rooms.split(",")
 
         setRoom(Number(roomsArray[0]));
+        sessionStorage.setItem('room', roomsArray[0]);
 
         if (rooms.length === 0) {} else if (rooms.length === 1) {
           const room = document.createElement("span");
@@ -76,40 +80,11 @@ export default function Home() {
     getRooms(divElement);
   })
 
-  function loadMessages() {
-    if (!document.hasFocus()) return;
-    let data: any;
-
-    if (room == 0) return;
-
-    fetch(`../api/rooms/message?roomID=${room}`)
-    .then(response => data = response)
-    .then(response => response.json())
-    .then(jsonData => {
-      if (data.status !== 200) {
-        console.log("Something went wrong")
-        return;
-      }
-
-      jsonData = JSON.parse(jsonData)
-
-      const messages = jsonData['messages'];
-
-      setMessages(
-        <div className={`${styles.messageBox}`}>
-          {messages.map((message: any) => (
-            <div key={message.id}>{message.content}</div>
-          ))}
-        </div>
-      );
-    })
-  }
-
   function getActiveMembers() {
     if (!document.hasFocus()) return;
     let data: any;
 
-    if (room == 0) return;
+    if (Number(sessionStorage.getItem("room")) == 0) return;
 
     fetch(`../api/rooms/activeMembers?roomID=${room}`, {
       method: "GET"
@@ -136,12 +111,14 @@ export default function Home() {
     })
   }
 
+  let memberInterval = setInterval(Math.random, 10000);
+
   useEffect(() => {
-    loadMessages();
+    clearInterval(memberInterval);
+
     getActiveMembers();
 
-    setInterval(loadMessages, 5000);
-    setInterval(getActiveMembers, 5000);
+    memberInterval = setInterval(getActiveMembers, 5000);
   }, [room])  
 
   function setRoomFunc(e: any) {
@@ -155,6 +132,7 @@ export default function Home() {
       }
 
       setRoom(id)
+      sessionStorage.setItem('room', id);
 }
 
   if (status === "loading") {
@@ -183,15 +161,15 @@ export default function Home() {
     }).then(response => {
       return response.status !== 200 ? "Something went wrong": textAreaElm.value = ""
     })
-
-    loadMessages();
   }
 
   return (
     <>
       <div className={styles.room}>
         <div className={styles.messages}>
-          {messages}
+          <Room.Provider value={room}>
+            <Chat /*ref={chatRef}*/ />
+          </Room.Provider>
 
           <div className={`${styles.messageInput}`} >
             <textarea className={`${styles.textArea}`} id="messageContent"></textarea>
