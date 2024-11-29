@@ -14,6 +14,7 @@ export default function Home() {
 
   const [room, setRoom] = useState(0);
   const [roomsRendered, setRoomsRenderd] = useState(false);
+  const [messages, setMessages] = useState(<></>)
 
   function getRooms(divElement: HTMLDivElement) {
     if (roomsRendered) {
@@ -74,14 +75,10 @@ export default function Home() {
     getRooms(divElement);
   })
 
-  function loadMessages(messageBox: HTMLDivElement) {
-    if (messageBox === null) {
-      return;
-    }
-
-    messageBox.innerHTML = "";
-
+  function loadMessages() {
     let data: any;
+
+    if (room == 0) return;
 
     fetch(`../api/rooms/message?roomID=${room}`)
     .then(response => data = response)
@@ -96,20 +93,20 @@ export default function Home() {
 
       const messages = jsonData['messages'];
 
-      for (let i = (messages.length - 1); i >= 0; i--) {
-        const message = document.createElement("div");
-        message.innerText = messages[i].content;
-
-        messageBox.appendChild(message);
-      }
+      setMessages(
+        <div className={`${styles.messageBox}`}>
+          {messages.map((message: any) => (
+            <div key={message.id}>{message.content}</div>
+          ))}
+        </div>
+      );
     })
   }
 
   useEffect(() => {
-    const messageBox: HTMLDivElement = document.getElementById("messageBox");
-    loadMessages(messageBox);
+    loadMessages();
 
-    setInterval(loadMessages, 5000, messageBox);
+    setInterval(loadMessages, 5000);
   }, [room])  
 
   function setRoomFunc(e: any) {
@@ -152,18 +149,22 @@ export default function Home() {
       return response.status !== 200 ? "Something went wrong": textAreaElm.value = ""
     })
 
-    const messageBox: HTMLDivElement = document.getElementById("messageBox");
+    /*
     const message = document.createElement("div");
     message.innerText = messageContent;
 
-    messageBox.appendChild(message);
+    messageBox.appendChild(message);*/
+    //const message = <div>content</div>;
+    //setMessages = messages + message;
+
+    loadMessages();
   }
 
   return (
     <>
       <div className={styles.room}>
         <div className={styles.messages}>
-          <div id="messageBox" className={`${styles.messageBox}`}></div>
+          {messages}
 
           <div className={`${styles.messageInput}`} >
             <textarea className={`${styles.textArea}`} id="messageContent"></textarea>

@@ -58,7 +58,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     }
 
     // Gets the messages
-    let messages = await getAll(`SELECT * FROM messages WHERE roomID=$roomID ORDER BY id DESC LIMIT 25;`, {"$roomID": roomID});
+    let messages = await getAll(`SELECT * FROM messages WHERE roomID=$roomID ORDER BY id ASC LIMIT 25;`, {"$roomID": roomID});
 
     return NextResponse.json(
         JSON.stringify({
