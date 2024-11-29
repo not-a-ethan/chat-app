@@ -78,7 +78,6 @@ export default function Home() {
 
   function loadMessages() {
     if (!document.hasFocus()) return;
-
     let data: any;
 
     if (room == 0) return;
@@ -107,7 +106,10 @@ export default function Home() {
   }
 
   function getActiveMembers() {
+    if (!document.hasFocus()) return;
     let data: any;
+
+    if (room == 0) return;
 
     fetch(`../api/rooms/activeMembers?roomID=${room}`, {
       method: "GET"
