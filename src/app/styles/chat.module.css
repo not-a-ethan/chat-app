@@ -88,3 +88,8 @@
 
     filter: invert(55%) sepia(29%) saturate(779%) hue-rotate(166deg) brightness(85%) contrast(91%);
 }
+
+.messageBox {
+    width: 100%;
+    height: 92.5%;
+}

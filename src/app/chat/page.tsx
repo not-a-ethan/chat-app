@@ -74,6 +74,44 @@ export default function Home() {
     getRooms(divElement);
   })
 
+  function loadMessages(messageBox: HTMLDivElement) {
+    if (messageBox === null) {
+      return;
+    }
+
+    messageBox.innerHTML = "";
+
+    let data: any;
+
+    fetch(`../api/rooms/message?roomID=${room}`)
+    .then(response => data = response)
+    .then(response => response.json())
+    .then(jsonData => {
+      if (data.status !== 200) {
+        console.log("Something went wrong")
+        return;
+      }
+
+      jsonData = JSON.parse(jsonData)
+
+      const messages = jsonData['messages'];
+
+      console.log(messages)
+
+      for (let i = (messages.length - 1); i >= 0; i--) {
+        const message = document.createElement("div");
+        message.innerText = messages[i].content;
+
+        messageBox.appendChild(message);
+      }
+    })
+  }
+
+  useEffect(() => {
+    const messageBox: HTMLDivElement = document.getElementById("messageBox");
+    loadMessages(messageBox);
+  }, [room])
+
   function setRoomFunc(e: any) {
       let id;
 
@@ -117,7 +155,7 @@ export default function Home() {
     <>
       <div className={styles.room}>
         <div className={styles.messages}>
-          <p>Messages</p>
+          <div id="messageBox" className={`${styles.messageBox}`}></div>
 
           <div className={`${styles.messageInput}`} >
             <textarea className={`${styles.textArea}`} id="messageContent"></textarea>
