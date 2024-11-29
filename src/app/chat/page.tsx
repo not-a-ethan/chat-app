@@ -76,6 +76,8 @@ export default function Home() {
   })
 
   function loadMessages() {
+    if (!document.hasFocus()) return;
+
     let data: any;
 
     if (room == 0) return;
@@ -148,14 +150,6 @@ export default function Home() {
     }).then(response => {
       return response.status !== 200 ? "Something went wrong": textAreaElm.value = ""
     })
-
-    /*
-    const message = document.createElement("div");
-    message.innerText = messageContent;
-
-    messageBox.appendChild(message);*/
-    //const message = <div>content</div>;
-    //setMessages = messages + message;
 
     loadMessages();
   }
