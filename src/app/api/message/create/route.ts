@@ -5,6 +5,8 @@ import { getToken } from "next-auth/jwt"
 import { getAll } from "@/app/database/get"
 import { changeDB } from "@/app/database/change"
 
+import { updateActivity } from "@/lib/updateActivity"
+
 export async function POST(req: NextRequest, res: NextResponse) {
     const token = await getToken({ req })
 
@@ -78,6 +80,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
 
     const response = await changeDB(`INSERT INTO messages (author, 'content', roomID) values ($username, $content, $id)`, {$username: username, $content: messageContent, $id: roomID})
+
+    updateActivity(username);
 
     return NextResponse.json(
         JSON.stringify(body),

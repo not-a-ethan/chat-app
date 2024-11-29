@@ -1,4 +1,4 @@
-import { accountExists } from "./accountExists";
+import { updateActivity } from "./updateActivity";
 import { changeDB } from "@/app/database/change";
 
 export function createAccount(type: String, username: String, password: String|null, sso_pro: String|null, sso_id: Number|null): boolean {
@@ -12,6 +12,8 @@ export function createAccount(type: String, username: String, password: String|n
     }
 
     const user: boolean = changeDB(query);
+
+    updateActivity(username)
 
     return user;
 }

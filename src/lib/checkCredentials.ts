@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import { accountExists } from "./accountExists";
 import { getAll } from "@/app/database/get";
 
+import { updateActivity } from "./updateActivity";
+
 export async function checkCredentials(username: String, password: String): Promise<boolean> {
     const exists = await accountExists("credentials", username, -1);
 
@@ -16,8 +18,10 @@ export async function checkCredentials(username: String, password: String): Prom
 
         const correct = await bcrypt.compare(password, hash);
 
+        if (correct) {
+            updateActivity(username);
+        }
+
         return correct;
     }
-
-    return false;
 }

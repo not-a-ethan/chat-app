@@ -4,6 +4,8 @@ import { getToken } from "next-auth/jwt"
 
 import { getAll } from "@/app/database/get"
 
+import { updateActivity } from '@/lib/updateActivity';
+
 export async function GET(req: NextRequest, res: NextResponse) {
     // Check auth status
     const token = await getToken({ req });
@@ -56,6 +58,9 @@ export async function GET(req: NextRequest, res: NextResponse) {
             { status: 403 }
         )
     }
+
+    // Update activity
+    updateActivity(username);
 
     // Gets the messages
     let messages = await getAll(`SELECT * FROM messages WHERE roomID=$roomID ORDER BY id ASC LIMIT 25;`, {"$roomID": roomID});

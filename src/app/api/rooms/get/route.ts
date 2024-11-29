@@ -4,6 +4,8 @@ import { getToken } from "next-auth/jwt"
 
 import { getAll } from "@/app/database/get"
 
+import { updateActivity } from '@/lib/updateActivity'
+
 export async function GET(req: NextRequest, res: NextResponse) {
     const token = await getToken({ req })
 
@@ -31,6 +33,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
     let rooms = await getAll(`SELECT * FROM users WHERE username=$username`, {"$username": username});
     rooms = rooms[0]["rooms"];
     rooms = rooms.replace('0,', '');
+
+    updateActivity(username);
 
     return NextResponse.json(
         JSON.stringify({

@@ -5,6 +5,8 @@ import { getToken } from "next-auth/jwt"
 import { getAll } from "@/app/database/get"
 import { changeDB } from "@/app/database/change"
 
+import { updateActivity } from "@/lib/updateActivity"
+
 export async function POST(req: NextRequest, res: NextResponse) {
     const token = await getToken({ req })
 
@@ -47,6 +49,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const query: String = "DELETE FROM messages WHERE 'messageID'=$messageID AND 'author'=$authorID"
     const response = await changeDB(query, {$messageID: messageID, $authorID: id})
+
+    let username: any = await getAll(`SELECT * FROM users WHERE externalID=${externalID}`);
+    username = username[0].username;
+    updateActivity(username);
 
     return NextResponse.json(
         JSON.stringify(response),

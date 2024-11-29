@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import { accountExists } from '@/lib/accountExists';
 import { createAccount } from '@/lib/createAccount';
 import { checkCredentials } from "@/lib/checkCredentials";
+import { updateActivity } from "@/lib/updateActivity"
 
 export async function POST(req: NextRequest, res: NextResponse) {
     interface bodyType {
@@ -41,6 +42,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
             const account: boolean = createAccount("credentials", username, hash, null, null);
 
             if (account) {
+                updateActivity(username);
+                
                 return NextResponse.json(
                     {"success": true},
                     {status: 200}

@@ -7,6 +7,7 @@ import GitHubProvider from "next-auth/providers/github";
 // functions
 import { accountExists } from "../../../../lib/accountExists"
 import { createAccount } from "@/lib/createAccount";
+import { updateActivity } from "@/lib/updateActivity";
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.AUTH_SECRET,
@@ -64,6 +65,8 @@ export const authOptions: NextAuthOptions = {
             provider = account?.provider;
             externalID = Number(account?.providerAccountId);
             username = profile?.login;
+
+            updateActivity(username);
           } else {
             if (user) {
               return true;
