@@ -96,8 +96,6 @@ export default function Home() {
 
       const messages = jsonData['messages'];
 
-      console.log(messages)
-
       for (let i = (messages.length - 1); i >= 0; i--) {
         const message = document.createElement("div");
         message.innerText = messages[i].content;
@@ -110,7 +108,9 @@ export default function Home() {
   useEffect(() => {
     const messageBox: HTMLDivElement = document.getElementById("messageBox");
     loadMessages(messageBox);
-  }, [room])
+
+    setInterval(loadMessages, 5000, messageBox);
+  }, [room])  
 
   function setRoomFunc(e: any) {
       let id;
