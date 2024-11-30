@@ -82,7 +82,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const currentRooms = sqlCurrentRooms[0]["rooms"];
     const newRooms = `${currentRooms}${roomID},`;
 
-    const result = await changeDB(`UPDATE users SET rooms=$rooms WHERE username=$username`, {"$room": newRooms, "$username": addUsername})
+    const query = `UPDATE users SET rooms=$rooms WHERE username=$username`;
+    const result = await changeDB(query, {"$rooms": newRooms, "$username": addUsername})
 
     if (!result) {
         return NextResponse.json(

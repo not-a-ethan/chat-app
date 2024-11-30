@@ -32,7 +32,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
 
     const dbIdResult = await getAll(`SELECT id FROM users WHERE username='${username}';`);
-    console.log(dbIdResult)
     const id = dbIdResult[0]["id"];
 
     const body: any = await req.json();

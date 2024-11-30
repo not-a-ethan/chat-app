@@ -9,6 +9,31 @@ export default function ActiveUsers() {
 
     const [room, setRoom] = useContext(Room)
 
+    function addUser() {
+      const username = prompt("Username of who you want to add:");
+      let data: any;
+
+      if (username == undefined || username?.trim() == '') return;
+
+      fetch("../api/rooms/addMember", {
+        method: "POST",
+        body: JSON.stringify({
+          "roomID": room,
+          "username": username
+        })
+      })
+      .then(response => data = response)
+      .then(response => response.json())
+      .then(jsonData => {
+        if (data.status !== 200) {
+          console.log("Something went wrong")
+          return;
+        }
+
+        getActiveMembers();
+      })
+    }
+
     function getActiveMembers() {
         if (!document.hasFocus()) return;
         let data: any;
@@ -37,6 +62,11 @@ export default function ActiveUsers() {
               {users.map((user: any) => (
                 <div key={user}>{user}</div>
               ))}
+
+              <br />
+              <div onClick={addUser}>
+                <p>Add Member</p>
+              </div>
             </div>
           )
         })
