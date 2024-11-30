@@ -11,7 +11,13 @@ export default function EditPassword() {
             // Error that they do not match
         }
 
-        // Make API request to change password
+        fetch("../../api/account/changePassword", {
+            method: "POST",
+            body: JSON.stringify({
+                "password": newPassword,
+                "currentPassword": currentPassowrd
+            })
+        }).then(response => console.log(response))
     }
 
     return (

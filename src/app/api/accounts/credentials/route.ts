@@ -36,7 +36,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         )
     }
 
-    const saltRounds = 20;
+    const saltRounds = 10;
     await bcrypt.genSalt(saltRounds, function(err: any, salt: any) {
         bcrypt.hash(password, salt, function(err: any, hash: any) {
             const account: boolean = createAccount("credentials", username, hash, null, null);
