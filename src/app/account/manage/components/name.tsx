@@ -1,3 +1,5 @@
+import styles from "./styles/name.module.css";
+
 export default function EditName() {
     function changeName() {
         const input: HTMLInputElement = document.getElementById("name");
@@ -13,11 +15,17 @@ export default function EditName() {
 
     return (
         <>
-            <label>
-                New name: <input type="text" id="name" />
-            </label>
+            <div className={`${styles.container}`}>
+                <label>
+                    New name: <input type="text" id="name" className={`${styles.input}`} />
+                </label>
 
-            <button onClick={changeName}>Change name!</button>
+                <br />
+
+                <div className={`${styles.buttonContainer}`}>
+                    <button onClick={changeName} className={`${styles.button}`}>Change name!</button>
+                </div>
+            </div>
         </>
     )
 }

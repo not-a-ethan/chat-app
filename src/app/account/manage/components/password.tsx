@@ -1,3 +1,5 @@
+import styles from "./styles/password.module.css"
+
 export default function EditPassword() {
     function changePassword() {
         const password: HTMLInputElement = document.getElementById("password");
@@ -21,20 +23,25 @@ export default function EditPassword() {
     }
 
     return (
-        <>
-            <label>
-                New password: <input type="password" id="password" />
-            </label>
+        <div className={`${styles.container}`}>
+            <div className={`${styles.inputs}`}>
+                <div className={`${styles.newPassword}`}>
+                    <label>
+                        New password: <input type="password" id="password" className={`${styles.input}`} />
+                    </label>
 
-            <label>
-                Confirm password: <input type="password" id="confirm" />
-            </label>
+                    <label>
+                        Confirm password: <input type="password" id="confirm" className={`${styles.input}`} />
+                    </label>
+                </div>
 
-            <label>
-                Current password: <input type="password" id="current" />
-            </label>
+                <label>
+                    Current password: <input type="password" id="current" className={`${styles.input}`} />
+                </label>
+            </div>
+            
 
-            <button onClick={changePassword}>Change password!</button>
-        </>
+            <button onClick={changePassword} className={`${styles.button}`}>Change password!</button>
+        </div>
     )
 }

@@ -27,6 +27,7 @@ export default function Manage() {
         <br />
         <EditPassword />
         <br />
+        <br />
         <EditName />
       </>
     );
