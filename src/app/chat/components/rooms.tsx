@@ -45,6 +45,7 @@ export default function Rooms() {
     
             rooms = jsonData["rooms"]
             const roomsArray = rooms.split(",")
+            roomsArray.pop();
     
             setRoom(Number(roomsArray[0]));
             sessionStorage.setItem('room', roomsArray[0]);
