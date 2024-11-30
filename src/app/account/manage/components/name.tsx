@@ -3,13 +3,18 @@ export default function EditName() {
         const input: HTMLInputElement = document.getElementById("name");
         const newName = input.value;
 
-        // Make API request to change username
+        fetch("../../api/account/changeName", {
+            method: "POST",
+            body: JSON.stringify({
+                "name": newName
+            })
+        }).then(response => console.log(response))
     }
 
     return (
         <>
             <label>
-                New username: <input type="text" id="name" />
+                New name: <input type="text" id="name" />
             </label>
 
             <button onClick={changeName}>Change name!</button>

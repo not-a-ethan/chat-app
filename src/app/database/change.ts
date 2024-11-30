@@ -11,5 +11,6 @@ export function changeDB(query: String, parms: any): boolean {
         }
       });
     });
-    return false;
+    
+    return true;
 }
