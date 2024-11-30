@@ -60,7 +60,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     updateActivity(username);
 
     // Users active in the past 5 min and in a specific room
-    const query = `SELECT * FROM users WHERE rooms LIKE CONCAT('%,', $room, ',%') AND recentlyActive > (strftime('%s', 'now') - 300000)`
+    const query = `SELECT * FROM users WHERE rooms LIKE CONCAT('%,', $room, ',%') AND recentlyActive > (strftime('%s', 'now') * 1000) - 300000)`
 
     let users = await getAll(query, {"$room": roomID});
     const usernames = [];
