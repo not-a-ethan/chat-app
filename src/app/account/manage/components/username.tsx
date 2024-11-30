@@ -3,7 +3,12 @@ export default function EditUsername() {
         const input: HTMLInputElement = document.getElementById("username");
         const newUsername = input.value;
 
-        // Make API request to change username
+        fetch("../../api/account/changeUsername", {
+            method: "POST",
+            body: JSON.stringify({
+                "username": newUsername
+            })
+        }).then(response => console.log(response))
     }
 
     return (
