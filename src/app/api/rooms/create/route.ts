@@ -54,9 +54,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const sqlRoomID = await getAll(`SELECT seq FROM sqlite_sequence WHERE name='rooms'`);
     const roomID = sqlRoomID[0]["seq"];
 
-    addUser(roomID, username);
+    const addedToRoom = addUser(roomID, username);
     
-    if (!result) {
+    if (!result || !addedToRoom) {
         return NextResponse.json(
             JSON.stringify({
                 "error": "Something went wrong"

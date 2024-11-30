@@ -24,6 +24,28 @@ export default function Rooms() {
         setRoom(id)
         sessionStorage.setItem('room', id);
     }
+
+    function createRoom() {
+      const roomName = prompt("What should the room be called?");
+      let data: any;
+
+      fetch("../api/rooms/create", {
+        method: "POST", 
+        body: JSON.stringify({
+          "name": roomName
+        })
+      })
+      .then(response => data = response)
+      .then(response => response.json())
+      .then(jsonData => {
+        if (data.status !== 200) {
+          console.log("Something went wrong")
+          return;
+        }
+
+        getRooms();
+      })
+    }
     
     function getRooms() {
         if (roomsRendered) {
@@ -55,6 +77,8 @@ export default function Rooms() {
                     {roomsArray.map((thisRoom: any) => (
                         <span className={`${styles.singleRoom}`} id={thisRoom} key={thisRoom} onClick={setRoomFunc}>{thisRoom}</span>
                     ))}
+
+                  <span className={`${styles.singleRoom}`} onClick={createRoom}>+ Create room</span>
                 </span>
             )
           })
