@@ -7,6 +7,17 @@ import { changeDB } from "@/app/database/change"
 
 import { updateActivity } from "@/lib/updateActivity"
 
+export async function addUser(roomID: Number, username: String) {
+    const sqlCurrentRooms = await getAll(`SELECT rooms FROM users WHERE username=$username`, {"$username": username});
+    const currentRooms = sqlCurrentRooms[0]["rooms"];
+    const newRooms = `${currentRooms}${roomID},`;
+
+    const query = `UPDATE users SET rooms=$rooms WHERE username=$username`;
+    const result = await changeDB(query, {"$rooms": newRooms, "$username": username})
+
+    return result;
+}
+
 export async function POST(req: NextRequest, res: NextResponse) {
     const token = await getToken({ req })
 
@@ -78,12 +89,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
         )
     }
 
-    const sqlCurrentRooms = await getAll(`SELECT rooms FROM users WHERE username=$username`, {"$username": addUsername});
-    const currentRooms = sqlCurrentRooms[0]["rooms"];
-    const newRooms = `${currentRooms}${roomID},`;
-
-    const query = `UPDATE users SET rooms=$rooms WHERE username=$username`;
-    const result = await changeDB(query, {"$rooms": newRooms, "$username": addUsername})
+    const result = await addUser(roomID, addUsername);
+    updateActivity(username);
 
     if (!result) {
         return NextResponse.json(
