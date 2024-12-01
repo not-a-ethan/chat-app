@@ -41,6 +41,10 @@
     align-items: center;
 }
 
+.rooms > span {
+    width: 100vw;
+}
+
 .chatMessages {
     overflow-y: scroll;
 
