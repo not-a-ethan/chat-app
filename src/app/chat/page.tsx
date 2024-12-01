@@ -54,7 +54,9 @@ export default function Home() {
       <Room.Provider value={[room, setRoom]}>
         <div className={styles.room}>
           <div className={styles.messages}>
-            <Chat />
+            <span className={`${styles.chatMessages}`}>
+              <Chat />
+            </span>
             
             <div className={`${styles.messageInput}`} >
               <textarea className={`${styles.textArea}`} id="messageContent"></textarea>

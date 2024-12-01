@@ -2,9 +2,9 @@
 
 import React, { useState, useContext, forwardRef, useEffect } from "react";
 
-import styles from "../../styles/chat.module.css";
-
 import { Room } from "../page";
+
+import styles from "./styles/rooms.module.css"
 
 export default function Rooms() {
     const [roomsRendered, setRoomsRenderd] = useState(false);

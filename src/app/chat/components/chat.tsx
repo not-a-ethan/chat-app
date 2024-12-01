@@ -4,6 +4,8 @@ import React, { useState, useContext, forwardRef, useEffect } from "react";
 
 import { Room } from "../page";
 
+import styles from "./styles/chat.module.css";
+
 const Chat = forwardRef((props: any, ref: any) => {
     const [messages, setMessages] = useState(<></>)
     const [room, setRoom] = useContext(Room)
@@ -31,9 +33,12 @@ const Chat = forwardRef((props: any, ref: any) => {
             const messages = jsonData['messages'];
 
             setMessages(
-                <div>
+                <div className={styles.chat}>
                     {messages.map((message: any) => (
-                        <div key={message.id}>{message.content}</div>
+                        <div key={message.id}>
+                            <p className={`${styles.author}`}>{message.author}</p>
+                            <p className={`${styles.message}`}> &nbsp; &nbsp; {message.content}</p>
+                        </div>
                     ))}
                 </div>
             );

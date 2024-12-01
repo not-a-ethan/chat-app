@@ -1,0 +1,14 @@
+.chat {
+    overflow-y: scroll;
+}
+
+.author {
+    font-weight: bold;
+    font-size: large;
+
+    margin-bottom: 0;
+}
+
+.message {
+    margin-top: 0;
+}
