@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react"
 import Chat from './components/chat';
 import ActiveUsers from './components/activeUsers';
 import Rooms from './components/rooms';
+import DraftMessage from './components/createMessage';
 
 import styles from "../styles/chat.module.css";
 
@@ -30,25 +31,6 @@ export default function Home() {
     return (<p>Access Denied</p>);
   }
 
-  function createMessage() {
-    const textAreaElm: any = document.getElementById("messageContent");
-    const messageContent: string = textAreaElm?.value;
-
-    if (messageContent.trim() === "") {
-      return;
-    }
-    
-    fetch("../api/message/create", {
-      method: "POST",
-      body: JSON.stringify({
-        "roomID": room,
-        "content": messageContent
-      })
-    }).then(response => {
-      return response.status !== 200 ? "Something went wrong": textAreaElm.value = ""
-    })
-  }
-
   return (
     <>
       <Room.Provider value={[room, setRoom]}>
@@ -58,16 +40,9 @@ export default function Home() {
               <Chat />
             </span>
             
-            <div className={`${styles.messageInput}`} >
-              <textarea className={`${styles.textArea}`} id="messageContent"></textarea>
-
-              <img
-                src={`/arrow-right.svg`}
-                alt="Right arrow to send the message"
-                className={`${styles.sendButton}`}
-                onClick={createMessage}
-              />
-            </div>
+            <span className={`${styles.draftMessage}`}>
+              <DraftMessage />
+            </span>
           </div>
 
           <div className={styles.people} id="people"><ActiveUsers /></div>     

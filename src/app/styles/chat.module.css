@@ -41,55 +41,20 @@
     align-items: center;
 }
 
-.messageInput {
-    position: absolute;
-    bottom: 2.5%;
-
-    margin-left: 0.75%;
-    margin-right: 0.75%;
-
-    width: 87.5%;
-    height: 2.5%;
-
-    background-color: var(--dark-background-primary);
-
-    border-color: var(--dark-background-secondary);
-    border: 3%;
-    border-radius: 0;
-    border-style: solid;
-}
-
-.textArea {
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 97.5%;
-    height: calc(100% - 5px);
-
-    background-color: var(--dark-background-primary);
-    border: none;
-
-    color: var(--dark-text-primary)
-}
-
-.sendButton {
-    position: absolute;
-    right: 0;
-
-    filter: invert(55%) sepia(29%) saturate(779%) hue-rotate(166deg) brightness(85%) contrast(91%);
-}
-
 .chatMessages {
     overflow-y: scroll;
 
     width: 100%;
-    height: 100%;
+    height: 92.5%;
     
     position: absolute;
-    bottom: 0;
+    top: 0;
 }
 
 .chatMessages * {
     overflow-y: scroll;
+}
+
+.draftMessage {
+    margin-top: 1%;
 }
