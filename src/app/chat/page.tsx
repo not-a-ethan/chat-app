@@ -11,7 +11,7 @@ import ActiveUsers from './components/activeUsers';
 import Rooms from './components/rooms';
 import DraftMessage from './components/createMessage';
 
-import styles from "../styles/chat.module.css";
+import styles from "./chat.module.css";
 
 export const Room = createContext(0);
 
