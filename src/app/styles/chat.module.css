@@ -17,11 +17,13 @@
 .messages {
     grid-column: 1;
 
-    width: 100%;
+    width: 90vw;
 }
 
 .people {
     grid-column: 2;
+
+    width: 10vw;
 
     padding: 1px;
     border-left: #4E87B7 solid 2px;
@@ -46,17 +48,17 @@
 }
 
 .chatMessages {
-    overflow-y: scroll;
-
-    width: 100%;
-    height: 92.5%;
+    width: 90vw;
     
     position: absolute;
-    top: 0;
+    bottom: 5%;
 }
 
-.chatMessages * {
-    overflow-y: scroll;
+.chatMessages > * {
+    height: 90vh;
+    overflow: auto;
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 .draftMessage {

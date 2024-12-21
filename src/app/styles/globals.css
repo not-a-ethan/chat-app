@@ -8,6 +8,10 @@
   width: fit-content;
 }
 
+body {
+  overflow-y: hidden;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     background-color: var(--dark-background-primary);

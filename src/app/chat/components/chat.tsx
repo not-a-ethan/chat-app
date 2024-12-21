@@ -30,7 +30,7 @@ const Chat = forwardRef((props: any, ref: any) => {
 
             jsonData = JSON.parse(jsonData)
 
-            const messages = jsonData['messages'];
+            const messages = jsonData['messages'].reverse();
 
             setMessages(
                 <div className={styles.chat}>
