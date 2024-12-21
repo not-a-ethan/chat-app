@@ -9,8 +9,10 @@ import { updateActivity } from "@/lib/updateActivity"
 import { addUser } from '../addMember/route'
 
 export async function POST(req: NextRequest, res: NextResponse) {
+    // Get info about user authentication
     const token = await getToken({ req })
 
+    // Checks if user is logged in
     if (!token) {
         return NextResponse.json(
             JSON.stringify(
@@ -36,6 +38,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     let externalID;
     let username;
 
+    // Gets info about user from DB
     if (token.sub) {
         externalID = token.sub;
         username = await getAll(`SELECT * FROM users WHERE externalID=${externalID}`);
@@ -48,13 +51,19 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const body = await req.json();
     const name = body["name"]
 
+    // Creates the room
     const createQuery = `INSERT INTO rooms (name) VALUES ($name)`;
     const result = changeDB(createQuery, {"$name": name})
 
+    // Gets the new roomID
     const sqlRoomID = await getAll(`SELECT seq FROM sqlite_sequence WHERE name='rooms'`);
     const roomID = sqlRoomID[0]["seq"];
 
+    // Adds the creating user to the new room
     const addedToRoom = addUser(roomID, username);
+
+    // Updates the time the user was last active
+    updateActivity(username);
     
     if (!result || !addedToRoom) {
         return NextResponse.json(

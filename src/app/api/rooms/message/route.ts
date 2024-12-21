@@ -59,7 +59,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         )
     }
 
-    // Update activity
+    // Updates the time the user was last active
     updateActivity(username);
 
     // Gets the messages

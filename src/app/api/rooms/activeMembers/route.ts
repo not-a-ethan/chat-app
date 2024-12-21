@@ -7,8 +7,10 @@ import { getAll } from "@/app/database/get"
 import { updateActivity } from '@/lib/updateActivity'
 
 export async function GET(req: NextRequest, res: NextResponse) {
+    // Get info about user authentication
     const token = await getToken({ req })
 
+    // Checks if user is logged in
     if (!token) {
         return NextResponse.json(
             JSON.stringify(
@@ -21,6 +23,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     let externalID;
     let username;
 
+    // Gets info about user from DB
     if (token.sub) {
         externalID = token.sub;
         username = await getAll(`SELECT * FROM users WHERE externalID=${externalID}`);
@@ -57,6 +60,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         )
     }
 
+    // Updates the time the user was last active
     updateActivity(username);
 
     // Users active in the past 5 min and in a specific room

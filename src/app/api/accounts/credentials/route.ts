@@ -20,6 +20,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const exists = await accountExists("credentials", username, -1)
 
+    /*
+    If the user already has an account, checks if credentrials are correct and has the API respond
+    */
     if (exists) {
         const correct: boolean = await checkCredentials(username, password);
 
@@ -36,6 +39,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
         )
     }
 
+    // This runs if user does not have an account
+    // This generates a password and creates the user in the DB
     const saltRounds = 10;
     await bcrypt.genSalt(saltRounds, function(err: any, salt: any) {
         bcrypt.hash(password, salt, function(err: any, hash: any) {

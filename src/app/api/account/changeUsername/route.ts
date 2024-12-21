@@ -8,8 +8,10 @@ import { changeDB } from '@/app/database/change'
 import { updateActivity } from '@/lib/updateActivity'
 
 export async function POST(req: NextRequest, res: NextResponse) {
+    // Get info about user authentication
     const token = await getToken({ req })
 
+    // Checks if user is logged in
     if (!token) {
         return NextResponse.json(
             JSON.stringify(
@@ -22,6 +24,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     let externalID;
     let username;
 
+    // Gets info about user from DB
     if (token.sub) {
         externalID = token.sub;
         username = await getAll(`SELECT * FROM users WHERE externalID=${externalID}`);
@@ -31,15 +34,18 @@ export async function POST(req: NextRequest, res: NextResponse) {
         username = "";
     }
 
+    // Gets users ID from the DB
     const dbIdResult = await getAll(`SELECT id FROM users WHERE username='${username}';`);
     const id = dbIdResult[0]["id"];
 
     const body: any = await req.json();
     const newUsername = body["username"];
 
+    // Updates the users username to the new one
     const query = `UPDATE users SET 'username'=$username WHERE id='${id}'`;
     const result = changeDB(query, {"$username": newUsername});
 
+    // Updates the time the user was last active
     updateActivity(username);
 
     if (result) {

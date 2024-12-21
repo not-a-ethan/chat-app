@@ -12,8 +12,10 @@ import { changeDB } from '@/app/database/change'
 import { updateActivity } from '@/lib/updateActivity'
 
 export async function POST(req: NextRequest, res: NextResponse) {
+    // Get info about user authentication
     const token = await getToken({ req })
 
+    // Checks if user is logged in
     if (!token) {
         return NextResponse.json(
             JSON.stringify(
@@ -27,6 +29,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     let username;
     let type;
 
+    // Gets info about user from DB// Gets info about user from DB
     if (token.sub) {
         externalID = token.sub;
         username = await getAll(`SELECT * FROM users WHERE externalID=${externalID}`);
@@ -37,6 +40,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         username = "";
     }
 
+    // Gets users ID from the DB
     const dbIdResult = await getAll(`SELECT id FROM users WHERE username='${username}';`);
     const id = dbIdResult[0]["id"];
 
@@ -46,15 +50,19 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     let nullpassword = false;
 
+    // Checks if user has sso
     if (type == "sso") {
         const dbResult = await getAll(`SELECT * FROM users WHERE id=${id}`)
         const currentHash = dbResult[0]["password"]
 
+        // Checks if current psw is null
+        // If so it should not need old password to set a new one.
         if (currentHash == null) {
             nullpassword = true;
         }
     }
 
+    // If the user already has a password, checks if the old one provided is correct.
     if (!nullpassword) {
         const passwordCorrect: boolean = await checkCredentials(username, currentPassword)
     
@@ -68,8 +76,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
         }
     }
 
+    // Updates the time the user was last active
     updateActivity(username);
     
+    // Generates and stored the new password
     await bcrypt.genSalt(10, async function(err: any, salt: any) {
         await bcrypt.hash(newPassword, salt, async function(err: any, hash: any) {
             if (err) {

@@ -19,8 +19,10 @@ export async function addUser(roomID: Number, username: String) {
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
+    // Get info about user authentication
     const token = await getToken({ req })
 
+    // Checks if user is logged in
     if (!token) {
         return NextResponse.json(
             JSON.stringify(
@@ -46,6 +48,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     let externalID;
     let username;
 
+    // Gets info about user from DB
     if (token.sub) {
         externalID = token.sub;
         username = await getAll(`SELECT * FROM users WHERE externalID=${externalID}`);
@@ -59,6 +62,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const roomID: Number = body["roomID"];
     const addUsername: String = body["username"];
 
+    // checks to see if the current user is in the room
     const sqlRooms = await getAll(`SELECT rooms FROM users WHERE username='${username}';`, {});
     const rooms: string = sqlRooms[0]["rooms"];
 
@@ -71,7 +75,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
         )
     }
 
-     if (roomID == 0) {
+    // Checks to make sure its not the dummy room
+    if (roomID == 0) {
         return NextResponse.json(
             JSON.stringify({
                 error: `Hey that room is not allowed. 0 Is just to make the DB happy so every user is "in" atleast one room.`
@@ -80,6 +85,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         )
      }
 
+    // Checks to make sure there is an actual username
     if (addUsername.trim() == "") {
         return NextResponse.json(
             JSON.stringify({
@@ -89,7 +95,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
         )
     }
 
+    // Adds the user
     const result = await addUser(roomID, addUsername);
+
+    // Updates the time the user was last active
     updateActivity(username);
 
     if (!result) {

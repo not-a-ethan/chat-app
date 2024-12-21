@@ -8,8 +8,10 @@ import { changeDB } from "@/app/database/change"
 import { updateActivity } from "@/lib/updateActivity"
 
 export async function POST(req: NextRequest, res: NextResponse) {
+    // Get info about user authentication
     const token = await getToken({ req })
 
+    // Checks if user is logged in
     if (!token) {
         return NextResponse.json(
             JSON.stringify(
@@ -22,6 +24,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     let externalID;
     let id;
 
+    // Gets info about user from DB
     if (token.sub) {
         externalID = token.sub;
         id = await getAll(`SELECT * FROM users WHERE externalID=$id`, {"$id": externalID});
@@ -35,6 +38,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const body = await req.json();
     const messageID: Number = body["messageID"];
 
+    // Checks to make sure the message exists & the user created thew  message
     const messageQuery: String = "SELECT * FROM messages WHERE 'author'=$id AND 'id'=$messageid";
     const message = await getAll(messageQuery, {"$id": id, "$messageID": messageID})
 
@@ -47,11 +51,14 @@ export async function POST(req: NextRequest, res: NextResponse) {
         )
     }
 
+    // Deletes the message
     const query: String = "DELETE FROM messages WHERE 'messageID'=$messageID AND 'author'=$authorID"
     const response = await changeDB(query, {$messageID: messageID, $authorID: id})
 
     let username: any = await getAll(`SELECT * FROM users WHERE externalID=${externalID}`);
     username = username[0].username;
+
+    // Updates the time the user was last active
     updateActivity(username);
 
     return NextResponse.json(
