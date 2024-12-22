@@ -29,6 +29,11 @@ export default function Rooms() {
       const roomName = prompt("What should the room be called?");
       let data: any;
 
+      if (roomName?.trim() === "" || roomName === null) {
+        console.log("this")
+        return;
+      }
+
       fetch("../api/rooms/create", {
         method: "POST", 
         body: JSON.stringify({
