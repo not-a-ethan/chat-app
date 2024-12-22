@@ -52,7 +52,6 @@ export default function Rooms() {
           return;
         } else {
           let data: any;
-          let rooms = '';
     
           fetch("../api/rooms/get", {
             method: "GET"
@@ -65,17 +64,23 @@ export default function Rooms() {
               console.log("Something went wrong")
             }
     
-            rooms = jsonData["rooms"]
+            let rooms = jsonData["rooms"];
+            let names = jsonData["names"];
+
             const roomsArray = rooms.split(",")
             roomsArray.pop();
+
+            for (let i = 0; i < roomsArray.length; i++) {
+              roomsArray[i] = [roomsArray[i], names[i]];
+            }
     
             setRoom(Number(roomsArray[0]));
-            sessionStorage.setItem('room', roomsArray[0]);
+            sessionStorage.setItem('room', roomsArray[0][0]);
 
             setRoomsDiv(
                 <span>
                     {roomsArray.map((thisRoom: any) => (
-                        <span className={`${styles.singleRoom}`} id={thisRoom} key={thisRoom} onClick={setRoomFunc}>{thisRoom}</span>
+                        <span className={`${styles.singleRoom}`} id={thisRoom[0]} key={thisRoom[0]} onClick={setRoomFunc}>{thisRoom[1]}</span>
                     ))}
 
                   <span className={`${styles.singleRoom}`} onClick={createRoom}>+ Create room</span>

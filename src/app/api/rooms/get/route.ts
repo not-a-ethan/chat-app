@@ -33,17 +33,35 @@ export async function GET(req: NextRequest, res: NextResponse) {
         username = "";
     }
 
-    // Gets the rooms from the DB
+    // Gets the rooms from the DB and formats array correctly.
     let rooms = await getAll(`SELECT * FROM users WHERE username=$username`, {"$username": username});
     rooms = rooms[0]["rooms"];
     rooms = rooms.replace('0,', '');
+    rooms = rooms.split(",");
+    rooms.pop(); 
+    rooms.sort();
+    rooms = rooms.join(",")
+    rooms += ","
+
+    let roomArr = rooms.split(",")
+    roomArr.pop();
+    
+    // Gets the names of all the rooms from DB
+    let names = [];
+    for (let i = 0; i < roomArr.length; i++) {
+        let currentName = await getAll(`SELECT name FROM rooms WHERE id=${roomArr[i]}`, {})
+        currentName = currentName[0]["name"]
+        names.push(currentName);
+    }
+    
 
     // Updates the time the user was last active
     updateActivity(username);
 
     return NextResponse.json(
         JSON.stringify({
-            "rooms": rooms
+            "rooms": rooms,
+            "names": names
         }),
         {status: 200}
     )
