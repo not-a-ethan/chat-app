@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 import styles from "./styles/name.module.css";
 
 export default function EditName() {
@@ -5,12 +7,18 @@ export default function EditName() {
         const input: HTMLInputElement = document.getElementById("name");
         const newName = input.value;
 
-        fetch("../../api/account/changeName", {
+        const promise = fetch("../../api/account/changeName", {
             method: "POST",
             body: JSON.stringify({
                 "name": newName
             })
         }).then(response => console.log(response));
+
+        toast.promise(promise, {
+           loading: "Changing name",
+           error: "Something went wrong, name WAS NOT changed",
+           success: "Name was changed" 
+        });
     }
 
     return (

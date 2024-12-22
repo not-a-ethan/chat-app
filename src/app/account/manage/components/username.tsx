@@ -1,16 +1,24 @@
-import styles from "./styles/username.module.css"
+import toast from "react-hot-toast";
+
+import styles from "./styles/username.module.css";
 
 export default function EditUsername() {
     function changeUsername() {
         const input: HTMLInputElement = document.getElementById("username");
         const newUsername = input.value;
 
-        fetch("../../api/account/changeUsername", {
+        const promise = fetch("../../api/account/changeUsername", {
             method: "POST",
             body: JSON.stringify({
                 "username": newUsername
             })
         }).then(response => console.log(response));
+
+        toast.promise(promise, {
+            loading: "Changing username",
+            error: "Something went wrong, username WAS NOT changed",
+            success: "Username was changed"
+        });
     }
 
     return (

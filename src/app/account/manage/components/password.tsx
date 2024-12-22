@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 import styles from "./styles/password.module.css";
 
 export default function EditPassword() {
@@ -10,16 +12,23 @@ export default function EditPassword() {
         const currentPassowrd = current.value;
 
         if (newPassword !== confirmPassword) {
-            // Error that they do not match
+            toast.error("New and old passwords are the same.");
+            return;
         }
 
-        fetch("../../api/account/changePassword", {
+        const promise = fetch("../../api/account/changePassword", {
             method: "POST",
             body: JSON.stringify({
                 "password": newPassword,
                 "currentPassword": currentPassowrd
             })
         }).then(response => console.log(response));
+
+        toast.promise(promise, {
+            loading: "Changing password",
+            error: "Something went wrong, password WAS NOT changed",
+            success: "Password was changed"
+        });
     }
 
     return (
