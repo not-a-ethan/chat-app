@@ -1,0 +1,8 @@
+.all {
+    text-align: center;
+    width: 100vw;
+}
+
+.list {
+    list-style-position: inside;
+}
