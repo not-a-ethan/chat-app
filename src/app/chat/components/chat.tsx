@@ -9,8 +9,8 @@ import { Room } from "../page";
 import styles from "./styles/chat.module.css";
 
 const Chat = forwardRef((props: any, ref: any) => {
-    const [messages, setMessages] = useState(<></>)
-    const [room, setRoom] = useContext(Room)
+    const [messages, setMessages] = useState(<></>);
+    const [room, setRoom] = useContext(Room);
 
     function loadMessages() {
         if (!document.hasFocus()) return;
@@ -26,11 +26,11 @@ const Chat = forwardRef((props: any, ref: any) => {
         .then(response => response.json())
         .then(jsonData => {
             if (data.status !== 200) {
-                toast.error("Something went wrong when getting messages")
+                toast.error("Something went wrong when getting messages");
                 return;
             }
 
-            jsonData = JSON.parse(jsonData)
+            jsonData = JSON.parse(jsonData);
 
             const messages = jsonData['messages'].reverse();
 
@@ -50,9 +50,9 @@ const Chat = forwardRef((props: any, ref: any) => {
     useEffect(() => {
         loadMessages();
         setInterval(loadMessages, 5000);
-    }, [room])
+    }, [room]);
     
-    return messages
+    return messages;
 });
 
 export default Chat;

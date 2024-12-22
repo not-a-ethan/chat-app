@@ -1,4 +1,4 @@
-import styles from "./styles/password.module.css"
+import styles from "./styles/password.module.css";
 
 export default function EditPassword() {
     function changePassword() {
@@ -19,7 +19,7 @@ export default function EditPassword() {
                 "password": newPassword,
                 "currentPassword": currentPassowrd
             })
-        }).then(response => console.log(response))
+        }).then(response => console.log(response));
     }
 
     return (
@@ -43,5 +43,5 @@ export default function EditPassword() {
 
             <button onClick={changePassword} className={`${styles.button}`}>Change password!</button>
         </div>
-    )
+    );
 }

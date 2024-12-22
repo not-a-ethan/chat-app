@@ -10,7 +10,7 @@ export default function EditName() {
             body: JSON.stringify({
                 "name": newName
             })
-        }).then(response => console.log(response))
+        }).then(response => console.log(response));
     }
 
     return (
@@ -27,5 +27,5 @@ export default function EditName() {
                 </div>
             </div>
         </>
-    )
+    );
 }

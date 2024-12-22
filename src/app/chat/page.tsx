@@ -1,10 +1,10 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 
 import React, { useState, useEffect, createContext } from "react";
 
-import { useSession } from "next-auth/react"
+import { useSession } from "next-auth/react";
 
 import Chat from './components/chat';
 import ActiveUsers from './components/activeUsers';
@@ -16,14 +16,14 @@ import styles from "./chat.module.css";
 export const Room = createContext(0);
 
 export default function Home() {
-  const { data: session, status } = useSession()
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const [room, setRoom] = useState(0);
   const [roomsRendered, setRoomsRenderd] = useState(false);
 
   if (status === "loading") {
-    return <p>Loading</p>
+    return (<p>Loading</p>);
   }
 
   if (status === "unauthenticated") {

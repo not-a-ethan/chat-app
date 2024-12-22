@@ -9,7 +9,7 @@ import { Room } from "../page";
 export default function ActiveUsers() {
     const [users, setUsers] = useState(<></>);
 
-    const [room, setRoom] = useContext(Room)
+    const [room, setRoom] = useContext(Room);
 
     function addUser() {
       const username = prompt("Username of who you want to add:");
@@ -23,13 +23,13 @@ export default function ActiveUsers() {
           "roomID": room,
           "username": username
         })
-      })
+      });
       
       toast.promise(addUser, {
         loading: "Creating room",
         success: "Created the room",
         error: "Error creating the room, please try again"
-      })
+      });
     }
 
     function getActiveMembers() {
@@ -67,7 +67,7 @@ export default function ActiveUsers() {
               </div>
             </div>
           )
-        })
+        });
       }
 
     useEffect(() => {

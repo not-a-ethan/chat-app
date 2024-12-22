@@ -1,4 +1,4 @@
-import { getSession } from "next-auth/react"
+import { getSession } from "next-auth/react";
 
 import { Toaster } from "react-hot-toast";
 

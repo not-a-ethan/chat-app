@@ -10,7 +10,7 @@ export default function EditUsername() {
             body: JSON.stringify({
                 "username": newUsername
             })
-        }).then(response => console.log(response))
+        }).then(response => console.log(response));
     }
 
     return (
@@ -25,5 +25,5 @@ export default function EditUsername() {
                 </div>
             </div>
         </>
-    )
+    );
 }

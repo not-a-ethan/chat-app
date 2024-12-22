@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 import { Room } from "../page";
 
-import styles from "./styles/createMessage.module.css"
+import styles from "./styles/createMessage.module.css";
 
 export default function DraftMessage() {
     const [room, setRoom] = useContext(Room)
@@ -22,11 +22,11 @@ export default function DraftMessage() {
         fetch("../api/message/create", {
             method: "POST",
             body: JSON.stringify({
-            "roomID": room,
-            "content": messageContent
+                "roomID": room,
+                "content": messageContent
             })
         }).then(response => {
-            return response.status !== 200 ? toast.error("Something went wrong when sending the message"): textAreaElm.value = ""
+            return response.status !== 200 ? toast.error("Something went wrong when sending the message"): textAreaElm.value = "";
         })
     }
 
@@ -41,5 +41,5 @@ export default function DraftMessage() {
             onClick={createMessage}
             />
         </div>
-    )
+    );
 }

@@ -6,12 +6,12 @@ import toast from "react-hot-toast";
 
 import { Room } from "../page";
 
-import styles from "./styles/rooms.module.css"
+import styles from "./styles/rooms.module.css";
 
 export default function Rooms() {
     const [roomsRendered, setRoomsRenderd] = useState(false);
     const [roomsDiv, setRoomsDiv] = useState(<></>);
-    const [room, setRoom] = useContext(Room)
+    const [room, setRoom] = useContext(Room);
 
     function setRoomFunc(e: any) {
         let id;
@@ -32,7 +32,6 @@ export default function Rooms() {
       let data: any;
 
       if (roomName?.trim() === "" || roomName === null) {
-        console.log("this")
         return;
       }
 
@@ -41,13 +40,13 @@ export default function Rooms() {
         body: JSON.stringify({
           "name": roomName
         })
-      })
+      });
 
       toast.promise(createRoom, {
         loading: "Creating room",
         success: "Created the room",
         error: "Error creating the room, please try again"
-      })
+      });
 
       getRooms();
     }
@@ -73,7 +72,7 @@ export default function Rooms() {
             let rooms = jsonData["rooms"];
             let names = jsonData["names"];
 
-            const roomsArray = rooms.split(",")
+            const roomsArray = rooms.split(",");
             roomsArray.pop();
 
             for (let i = 0; i < roomsArray.length; i++) {
@@ -91,7 +90,7 @@ export default function Rooms() {
 
                   <span className={`${styles.singleRoom}`} onClick={createRoom}>+ Create room</span>
                 </span>
-            )
+            );
           })
           setRoomsRenderd(true);
         }
