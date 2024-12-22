@@ -2,6 +2,8 @@
 
 import React, { useState, useContext, forwardRef, useEffect } from "react";
 
+import toast from "react-hot-toast";
+
 import { Room } from "../page";
 
 import styles from "./styles/rooms.module.css"
@@ -34,22 +36,20 @@ export default function Rooms() {
         return;
       }
 
-      fetch("../api/rooms/create", {
+      const createRoom = fetch("../api/rooms/create", {
         method: "POST", 
         body: JSON.stringify({
           "name": roomName
         })
       })
-      .then(response => data = response)
-      .then(response => response.json())
-      .then(jsonData => {
-        if (data.status !== 200) {
-          console.log("Something went wrong")
-          return;
-        }
 
-        getRooms();
+      toast.promise(createRoom, {
+        loading: "Creating room",
+        success: "Created the room",
+        error: "Error creating the room, please try again"
       })
+
+      getRooms();
     }
     
     function getRooms() {
@@ -66,7 +66,8 @@ export default function Rooms() {
           .then(jsonData => {
             jsonData = JSON.parse(jsonData)
             if (data.status !== 200) {
-              console.log("Something went wrong")
+              toast.error("Something went wrong when getting rooms")
+              return;
             }
     
             let rooms = jsonData["rooms"];

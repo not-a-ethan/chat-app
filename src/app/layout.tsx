@@ -1,5 +1,7 @@
 import { getSession } from "next-auth/react"
 
+import { Toaster } from "react-hot-toast";
+
 import Providers from "./providers";
 
 import "./styles/globals.css";
@@ -17,6 +19,7 @@ export default async function RootLayout({
             <Providers>
                 {children}
             </Providers>
+            <Toaster />
         </body>
     </html>
   );

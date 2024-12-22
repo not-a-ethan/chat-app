@@ -2,6 +2,8 @@
 
 import React, { useState, useContext, forwardRef, useEffect } from "react";
 
+import toast from "react-hot-toast";
+
 import { Room } from "../page";
 
 export default function ActiveUsers() {
@@ -15,22 +17,18 @@ export default function ActiveUsers() {
 
       if (username == undefined || username?.trim() == '') return;
 
-      fetch("../api/rooms/addMember", {
+      const addUser = fetch("../api/rooms/addMember", {
         method: "POST",
         body: JSON.stringify({
           "roomID": room,
           "username": username
         })
       })
-      .then(response => data = response)
-      .then(response => response.json())
-      .then(jsonData => {
-        if (data.status !== 200) {
-          console.log("Something went wrong")
-          return;
-        }
-
-        getActiveMembers();
+      
+      toast.promise(addUser, {
+        loading: "Creating room",
+        success: "Created the room",
+        error: "Error creating the room, please try again"
       })
     }
 
@@ -42,14 +40,14 @@ export default function ActiveUsers() {
 
         if (Number(roomID) == 0) return;
     
-        fetch(`../api/rooms/activeMembers?roomID=${roomID}`, {
+        const promise = fetch(`../api/rooms/activeMembers?roomID=${roomID}`, {
           method: "GET"
         })
         .then(response => data = response)
         .then(response => response.json())
         .then(jsonData => {
           if (data.status !== 200) {
-            console.log("Something went wrong")
+            toast.error("Something went wrong getting active members")
             return;
           }
     

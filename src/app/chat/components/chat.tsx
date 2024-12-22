@@ -2,6 +2,8 @@
 
 import React, { useState, useContext, forwardRef, useEffect } from "react";
 
+import toast from "react-hot-toast";
+
 import { Room } from "../page";
 
 import styles from "./styles/chat.module.css";
@@ -24,8 +26,8 @@ const Chat = forwardRef((props: any, ref: any) => {
         .then(response => response.json())
         .then(jsonData => {
             if (data.status !== 200) {
-            console.log("Something went wrong")
-            return;
+                toast.error("Something went wrong when getting messages")
+                return;
             }
 
             jsonData = JSON.parse(jsonData)

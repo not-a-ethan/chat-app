@@ -2,6 +2,8 @@
 
 import React, { useState, useContext, forwardRef, useEffect } from "react";
 
+import toast from "react-hot-toast";
+
 import { Room } from "../page";
 
 import styles from "./styles/createMessage.module.css"
@@ -24,7 +26,7 @@ export default function DraftMessage() {
             "content": messageContent
             })
         }).then(response => {
-            return response.status !== 200 ? "Something went wrong": textAreaElm.value = ""
+            return response.status !== 200 ? toast.error("Something went wrong when sending the message"): textAreaElm.value = ""
         })
     }
 
