@@ -1,19 +1,17 @@
 'use client'
 
-import React, { useContext } from "react";
+import React from "react";
 
 import { Textarea } from "@nextui-org/input";
 
 import toast from "react-hot-toast";
 
-import { Room } from "../page";
-
 import styles from "./styles/createMessage.module.css";
 
 export default function DraftMessage() {
-    const [room, setRoom] = useContext(Room);
-
     function createMessage() {
+        const room = sessionStorage.getItem("room");
+
         const textAreaElm: any = document.getElementById("messageContent");
         const messageContent: string = textAreaElm?.value;
 

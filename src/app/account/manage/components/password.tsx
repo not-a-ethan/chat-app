@@ -26,7 +26,7 @@ export default function EditPassword() {
                 "password": newPassword,
                 "currentPassword": currentPassowrd
             })
-        }).then(response => console.log(response));
+        });
 
         toast.promise(promise, {
             loading: "Changing password",

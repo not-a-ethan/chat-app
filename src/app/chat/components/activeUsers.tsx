@@ -28,9 +28,9 @@ export default function ActiveUsers() {
       });
       
       toast.promise(addUser, {
-        loading: "Creating room",
-        success: "Created the room",
-        error: "Error creating the room, please try again"
+        loading: "Adding user",
+        success: "Added the user to the room",
+        error: "Error adding the user, please try again"
       });
     }
 

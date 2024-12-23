@@ -37,7 +37,7 @@ const Chat = forwardRef((props: any, ref: any) => {
             const messages = jsonData['messages'].reverse();
 
             function formatDate(unixTimestamp: number) {
-                const date = new Date(unixTimestamp * 1000);
+                const date = new Date(unixTimestamp);
                 const offset = date.getTimezoneOffset();
                 const formattedDate = Intl.DateTimeFormat(navigator.language, {
                     year: 'numeric',

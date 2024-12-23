@@ -16,7 +16,7 @@ export default function EditName() {
             body: JSON.stringify({
                 "name": newName
             })
-        }).then(response => console.log(response));
+        });
 
         toast.promise(promise, {
            loading: "Changing name",
