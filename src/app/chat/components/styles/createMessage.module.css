@@ -22,8 +22,6 @@
     height: calc(100% - 5px);
 
     border: none;
-
-    color: var(--dark-text-primary)
 }
 
 .sendButton {
