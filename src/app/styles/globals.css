@@ -2,13 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  width: fit-content;
+html {
+  width: 100vw;
+  height: 100vh;
 }
 
 body {
   overflow-y: hidden;
 
+  width: 100vw;
+  height: 100vh;
+}
+
+.pageContainer {
   width: 100vw;
   height: 100vh;
 }

@@ -22,13 +22,13 @@ export default function Manage() {
   }
 
   return (
-    <>
+    <div className='pageContainer'>
       <EditUsername />
       <br />
       <EditPassword />
       <br />
       <br />
       <EditName />
-    </>
+    </div>
   );
 }

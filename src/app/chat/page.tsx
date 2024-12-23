@@ -32,7 +32,7 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div className='pageContainer'>
       <Room.Provider value={[room, setRoom]}>
         <div className={styles.room}>
           <div className={styles.messages}>
@@ -50,6 +50,6 @@ export default function Home() {
 
         <div className={`${styles.rooms}`} id="roomList"><Rooms /></div>
       </Room.Provider>
-    </>
+    </div>
   );
 }

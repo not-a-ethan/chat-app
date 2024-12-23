@@ -4,7 +4,7 @@ import {Button} from '@nextui-org/button';
 
 export default function Home() {
   return (
-    <div className={`${styles.all}`}>
+    <div className={`${styles.all} pageContainer`}>
       <h1>Chat App</h1>
 
       <p>This is a project by <a href="https://github.com/not-a-ethan">Ethan</a>. This project is a web app that allowed chatting, similer to others such as discord. You can find the code for this project in this <a href="https://github.com/not-a-ethan/chat-app">Github repo</a>.</p>

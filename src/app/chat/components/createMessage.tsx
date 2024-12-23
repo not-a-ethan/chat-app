@@ -34,7 +34,7 @@ export default function DraftMessage() {
 
     return (
         <div className={`${styles.messageInput}`} >
-            <Textarea className={`${styles.textArea}`} color="secondary" id="messageContent"></Textarea>
+            <Textarea className={`${styles.textArea}`} id="messageContent"></Textarea>
 
             <img
             src={`/arrow-right.svg`}
