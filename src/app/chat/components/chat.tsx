@@ -1,5 +1,7 @@
 'use client'
 
+import {Avatar} from "@nextui-org/avatar";
+
 import React, { useState, useContext, forwardRef, useEffect } from "react";
 
 import toast from "react-hot-toast";
@@ -34,11 +36,25 @@ const Chat = forwardRef((props: any, ref: any) => {
 
             const messages = jsonData['messages'].reverse();
 
+            function formatDate(unixTimestamp: number) {
+                const date = new Date(unixTimestamp * 1000);
+                const offset = date.getTimezoneOffset();
+                const formattedDate = Intl.DateTimeFormat(navigator.language, {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                }).format(date);
+
+                return formattedDate;
+              }
+
             setMessages(
                 <div className={styles.chat}>
                     {messages.map((message: any) => (
                         <div key={message.id}>
-                            <p className={`${styles.author}`}>{message.author}</p>
+                            <Avatar name={message.author} className={`${styles.avatar}`} /> <span>{message.author}</span> <span className={`${styles.timestamp}`}>{formatDate(message.created)}</span>
                             <p className={`${styles.message}`}> &nbsp; &nbsp; {message.content}</p>
                         </div>
                     ))}

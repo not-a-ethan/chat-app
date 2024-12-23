@@ -1,5 +1,7 @@
 'use client'
 
+import { Button } from "@nextui-org/button"
+
 import React, { useState, useContext, forwardRef, useEffect } from "react";
 
 import toast from "react-hot-toast";
@@ -85,10 +87,10 @@ export default function Rooms() {
             setRoomsDiv(
                 <span>
                     {roomsArray.map((thisRoom: any) => (
-                        <span className={`${styles.singleRoom}`} id={thisRoom[0]} key={thisRoom[0]} onClick={setRoomFunc}>{thisRoom[1]}</span>
+                        <Button className={`${styles.singleRoom}`} id={thisRoom[0]} key={thisRoom[0]} onPress={setRoomFunc}>{thisRoom[1]}</Button>
                     ))}
 
-                  <span className={`${styles.singleRoom}`} onClick={createRoom}>+ Create room</span>
+                  <Button className={`${styles.singleRoom}`} onPress={createRoom}>+ Create room</Button>
                 </span>
             );
           })

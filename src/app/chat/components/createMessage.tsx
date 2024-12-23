@@ -1,5 +1,7 @@
 'use client'
 
+import { Textarea } from "@nextui-org/input";
+
 import React, { useState, useContext, forwardRef, useEffect } from "react";
 
 import toast from "react-hot-toast";
@@ -32,7 +34,7 @@ export default function DraftMessage() {
 
     return (
         <div className={`${styles.messageInput}`} >
-            <textarea className={`${styles.textArea}`} id="messageContent"></textarea>
+            <Textarea className={`${styles.textArea}`} color="secondary" id="messageContent"></Textarea>
 
             <img
             src={`/arrow-right.svg`}

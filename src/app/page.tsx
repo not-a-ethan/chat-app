@@ -1,5 +1,7 @@
 import styles from "./styles/home.module.css";
 
+import {Button} from '@nextui-org/button'; 
+
 export default function Home() {
   return (
     <div className={`${styles.all}`}>

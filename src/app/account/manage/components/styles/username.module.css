@@ -1,15 +1,21 @@
 .container {
     width: fit-content;
+
+    display: grid;
 }
 
 .input {
     background: var(--dark-background-primary);
     border-color: var(--dark-background-secondary);
+
+    grid-column: 1;
 }
 
 .buttonContainer {
     text-align: center;
     margin-top: 1%;
+
+    grid-column: 2;
 }
 
 .button {

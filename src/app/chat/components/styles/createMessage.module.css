@@ -8,9 +8,6 @@
     width: 87.5%;
     height: 2.5%;
 
-    background-color: var(--dark-background-primary);
-
-    border-color: var(--dark-background-secondary);
     border: 3%;
     border-radius: 0;
     border-style: solid;
@@ -24,7 +21,6 @@
     width: 97.5%;
     height: calc(100% - 5px);
 
-    background-color: var(--dark-background-primary);
     border: none;
 
     color: var(--dark-text-primary)

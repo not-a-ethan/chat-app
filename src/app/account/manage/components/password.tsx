@@ -1,3 +1,7 @@
+import { Form } from "@nextui-org/form";
+import { Input } from "@nextui-org/input";
+import { Button } from "@nextui-org/button"
+
 import toast from "react-hot-toast";
 
 import styles from "./styles/password.module.css";
@@ -32,25 +36,19 @@ export default function EditPassword() {
     }
 
     return (
-        <div className={`${styles.container}`}>
+        <Form className={`${styles.container}`}>
             <div className={`${styles.inputs}`}>
                 <div className={`${styles.newPassword}`}>
-                    <label>
-                        New password: <input type="password" id="password" className={`${styles.input}`} />
-                    </label>
+                    <Input label="New password" type="password" id="password" className={`${styles.input}`} />
 
-                    <label>
-                        Confirm password: <input type="password" id="confirm" className={`${styles.input}`} />
-                    </label>
+                    <Input label="Confirm password" type="password" id="confirm" className={`${styles.input}`} />
                 </div>
 
-                <label>
-                    Current password: <input type="password" id="current" className={`${styles.input}`} />
-                </label>
+                <Input label="Current password" type="password" id="current" className={`${styles.input}`} />
             </div>
             
 
-            <button onClick={changePassword} className={`${styles.button}`}>Change password!</button>
-        </div>
+            <Button onPress={changePassword} className={`${styles.button}`}>Change password!</Button>
+        </Form>
     );
 }

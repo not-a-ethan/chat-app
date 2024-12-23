@@ -12,3 +12,12 @@
 .message {
     margin-top: 0;
 }
+
+.avatar {
+    display: inline-block;
+    margin-right: .25%;
+}
+
+.timestamp {
+    font-size: small;
+}

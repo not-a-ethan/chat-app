@@ -1,5 +1,7 @@
 'use client'
 
+import { Button } from "@nextui-org/button";
+
 import React, { useState, useContext, forwardRef, useEffect } from "react";
 
 import toast from "react-hot-toast";
@@ -62,9 +64,9 @@ export default function ActiveUsers() {
               ))}
 
               <br />
-              <div onClick={addUser}>
-                <p>Add Member</p>
-              </div>
+              <Button onPress={addUser}>
+                Add Member
+              </Button>
             </div>
           )
         });

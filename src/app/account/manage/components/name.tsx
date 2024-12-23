@@ -1,3 +1,7 @@
+import { Form } from "@nextui-org/form";
+import { Input } from "@nextui-org/input";
+import { Button } from "@nextui-org/button"
+
 import toast from "react-hot-toast";
 
 import styles from "./styles/name.module.css";
@@ -23,17 +27,11 @@ export default function EditName() {
 
     return (
         <>
-            <div className={`${styles.container}`}>
-                <label>
-                    New name: <input type="text" id="name" className={`${styles.input}`} />
-                </label>
+            <Form className={`${styles.container}`}>
+                <Input label="New name" type="text" id="name" className={`${styles.input}`} />
 
-                <br />
-
-                <div className={`${styles.buttonContainer}`}>
-                    <button onClick={changeName} className={`${styles.button}`}>Change name!</button>
-                </div>
-            </div>
+                <Button onPress={changeName} className={`${styles.button}`}>Change name!</Button>
+            </Form>
         </>
     );
 }
