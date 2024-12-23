@@ -1,6 +1,6 @@
-import { getSession } from "next-auth/react";
-
 import { Toaster } from "react-hot-toast";
+
+import { getSession } from "next-auth/react";
 
 import Providers from "./providers";
 

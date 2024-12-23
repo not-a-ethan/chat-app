@@ -1,8 +1,8 @@
+import toast from "react-hot-toast";
+
 import { Form } from "@nextui-org/form";
 import { Input } from "@nextui-org/input";
-import { Button } from "@nextui-org/button"
-
-import toast from "react-hot-toast";
+import { Button } from "@nextui-org/button";
 
 import styles from "./styles/username.module.css";
 
@@ -27,13 +27,13 @@ export default function EditUsername() {
 
     return (
         <>
-            <div className={`${styles.container}`}>
+            <Form className={`${styles.container}`}>
                 <Input label="New username" type="text" id="username" className={`${styles.input}`} />
 
                 <div className={`${styles.buttonContainer}`}>
                     <Button onPress={changeUsername} className={`${styles.button}`}>Change username!</Button>
                 </div>
-            </div>
+            </Form>
         </>
     );
 }

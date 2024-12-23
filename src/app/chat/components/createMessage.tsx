@@ -1,8 +1,8 @@
 'use client'
 
-import { Textarea } from "@nextui-org/input";
+import React, { useContext } from "react";
 
-import React, { useState, useContext, forwardRef, useEffect } from "react";
+import { Textarea } from "@nextui-org/input";
 
 import toast from "react-hot-toast";
 
@@ -11,7 +11,7 @@ import { Room } from "../page";
 import styles from "./styles/createMessage.module.css";
 
 export default function DraftMessage() {
-    const [room, setRoom] = useContext(Room)
+    const [room, setRoom] = useContext(Room);
 
     function createMessage() {
         const textAreaElm: any = document.getElementById("messageContent");
@@ -29,7 +29,7 @@ export default function DraftMessage() {
             })
         }).then(response => {
             return response.status !== 200 ? toast.error("Something went wrong when sending the message"): textAreaElm.value = "";
-        })
+        });
     }
 
     return (

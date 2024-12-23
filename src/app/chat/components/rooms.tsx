@@ -1,8 +1,8 @@
 'use client'
 
-import { Button } from "@nextui-org/button"
-
 import React, { useState, useContext, forwardRef, useEffect } from "react";
+
+import { Button } from "@nextui-org/button";
 
 import toast from "react-hot-toast";
 
@@ -21,11 +21,11 @@ export default function Rooms() {
         try {
             id = e.target.id;
         } catch (error) {
-            console.log(error)
+            console.log(error);
             return;
         }
   
-        setRoom(id)
+        setRoom(id);
         sessionStorage.setItem('room', id);
     }
 
@@ -86,14 +86,14 @@ export default function Rooms() {
 
             setRoomsDiv(
                 <span>
-                    {roomsArray.map((thisRoom: any) => (
-                        <Button className={`${styles.singleRoom}`} id={thisRoom[0]} key={thisRoom[0]} onPress={setRoomFunc}>{thisRoom[1]}</Button>
-                    ))}
+                  {roomsArray.map((thisRoom: any) => (
+                      <Button className={`${styles.singleRoom}`} id={thisRoom[0]} key={thisRoom[0]} onPress={setRoomFunc}>{thisRoom[1]}</Button>
+                  ))}
 
                   <Button className={`${styles.singleRoom}`} onPress={createRoom}>+ Create room</Button>
                 </span>
             );
-          })
+          });
           setRoomsRenderd(true);
         }
       }

@@ -1,8 +1,8 @@
 'use client'
 
-import {Avatar} from "@nextui-org/avatar";
-
 import React, { useState, useContext, forwardRef, useEffect } from "react";
+
+import { Avatar } from "@nextui-org/avatar";
 
 import toast from "react-hot-toast";
 
@@ -48,7 +48,7 @@ const Chat = forwardRef((props: any, ref: any) => {
                 }).format(date);
 
                 return formattedDate;
-              }
+            }
 
             setMessages(
                 <div className={styles.chat}>
@@ -60,7 +60,7 @@ const Chat = forwardRef((props: any, ref: any) => {
                     ))}
                 </div>
             );
-        })
+        });
     }
 
     useEffect(() => {

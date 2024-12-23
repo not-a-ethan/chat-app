@@ -1,8 +1,8 @@
+import toast from "react-hot-toast";
+
 import { Form } from "@nextui-org/form";
 import { Input } from "@nextui-org/input";
-import { Button } from "@nextui-org/button"
-
-import toast from "react-hot-toast";
+import { Button } from "@nextui-org/button";
 
 import styles from "./styles/password.module.css";
 

@@ -1,6 +1,6 @@
-import styles from "./styles/home.module.css";
+import { Link } from "@nextui-org/link";
 
-import {Button} from '@nextui-org/button'; 
+import styles from "./styles/home.module.css";
 
 export default function Home() {
   return (
@@ -16,6 +16,10 @@ export default function Home() {
         <li>React Hot Toast</li>
         <li>SQLite</li>
       </ul>
+
+      <br />
+
+      <p>You can go to <Link href="/chat">/chat</Link> to start using the app.</p>
     </div>
   );
 }

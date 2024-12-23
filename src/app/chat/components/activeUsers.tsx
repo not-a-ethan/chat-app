@@ -1,8 +1,8 @@
 'use client'
 
-import { Button } from "@nextui-org/button";
-
 import React, { useState, useContext, forwardRef, useEffect } from "react";
+
+import { Button } from "@nextui-org/button";
 
 import toast from "react-hot-toast";
 
@@ -49,11 +49,11 @@ export default function ActiveUsers() {
         .then(response => response.json())
         .then(jsonData => {
           if (data.status !== 200) {
-            toast.error("Something went wrong getting active members")
+            toast.error("Something went wrong getting active members");
             return;
           }
     
-          jsonData = JSON.parse(jsonData)
+          jsonData = JSON.parse(jsonData);
     
           const users: Array<String> = jsonData['users'];
     
@@ -68,14 +68,14 @@ export default function ActiveUsers() {
                 Add Member
               </Button>
             </div>
-          )
+          );
         });
       }
 
     useEffect(() => {
         getActiveMembers();
         setInterval(getActiveMembers, 5000);
-    }, [room])
+    }, [room]);
 
     return users;
 }

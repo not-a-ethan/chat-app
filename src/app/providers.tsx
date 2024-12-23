@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import {NextUIProvider} from '@nextui-org/react'
+import { NextUIProvider } from '@nextui-org/react';
 
 import { SessionProvider } from "next-auth/react";
 
@@ -11,7 +11,6 @@ export default function Providers({children}: {children: React.ReactNode}) {
 
     useEffect(() => {
         const matchMedia = window.matchMedia("(prefers-color-scheme: dark)");
-  
         setDarkMode(matchMedia.matches);
     }, []);
 

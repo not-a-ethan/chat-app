@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, createContext } from "react";
 
 import { useSession } from "next-auth/react";
 
@@ -20,7 +20,6 @@ export default function Home() {
   const router = useRouter();
 
   const [room, setRoom] = useState(0);
-  const [roomsRendered, setRoomsRenderd] = useState(false);
 
   if (status === "loading") {
     return (<p>Loading</p>);
@@ -37,7 +36,7 @@ export default function Home() {
         <div className={styles.room}>
           <div className={styles.messages}>
             <span className={`${styles.chatMessages}`}>
-              <Chat />
+                <Chat />
             </span>
             
             <span className={`${styles.draftMessage}`}>
