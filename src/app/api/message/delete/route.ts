@@ -21,17 +21,18 @@ export async function POST(req: NextRequest, res: NextResponse) {
         );
     }
 
-    let externalID;
+    let username;
     let id;
 
     // Gets info about user from DB
     if (token.sub) {
-        externalID = token.sub;
-        id = await getAll(`SELECT * FROM users WHERE externalID=$id`, {"$id": externalID});
-        id = id[0].id;
+        const externalID = token.sub;
+        const response = await getAll(`SELECT * FROM users WHERE externalID=$id`, {"$id": externalID});
+        id = response[0].id;
+        username = response[0].username;
     } else {
-        externalID = NaN;
-        id = -1;
+        id = Number(token.name);
+        username = token.email;
     }
     
 
@@ -54,9 +55,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
     // Deletes the message
     const query: String = "DELETE FROM messages WHERE 'messageID'=$messageID AND 'author'=$authorID"
     const response = await changeDB(query, {$messageID: messageID, $authorID: id})
-
-    let username: any = await getAll(`SELECT * FROM users WHERE externalID=${externalID}`);
-    username = username[0].username;
 
     // Updates the time the user was last active
     updateActivity(username);

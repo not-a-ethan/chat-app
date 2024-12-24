@@ -20,17 +20,15 @@ export async function GET(req: NextRequest, res: NextResponse) {
         );
     }
 
-    let externalID;
     let username;
 
     // Gets info about user from DB
     if (token.sub) {
-        externalID = token.sub;
+        const externalID = token.sub;
         username = await getAll(`SELECT * FROM users WHERE externalID=${externalID}`);
         username = username[0].username;
     } else {
-        externalID = NaN;
-        username = "";
+        username = token.email;
     }
 
     // Gets the rooms from the DB and formats array correctly.
@@ -49,8 +47,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
     // Gets the names of all the rooms from DB
     let names = [];
     for (let i = 0; i < roomArr.length; i++) {
-        let currentName = await getAll(`SELECT name FROM rooms WHERE id=${roomArr[i]}`, {})
-        currentName = currentName[0]["name"]
+        let currentName = await getAll(`SELECT name FROM rooms WHERE id=${roomArr[i]}`, {});
+        currentName = currentName[0]["name"];
         names.push(currentName);
     }
     

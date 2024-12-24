@@ -20,17 +20,15 @@ export async function GET(req: NextRequest, res: NextResponse) {
         );
     }
 
-    let externalID;
     let username;
 
     // Gets info about user from DB
     if (token.sub) {
-        externalID = token.sub;
+        const externalID = token.sub;
         username = await getAll(`SELECT * FROM users WHERE externalID=${externalID}`);
         username = username[0].username;
     } else {
-        externalID = NaN;
-        username = "";
+        username = token.email;
     }
 
     // Get room ID

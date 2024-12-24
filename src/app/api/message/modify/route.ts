@@ -34,17 +34,18 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
    */
 
-    let externalID;
     let id;
+    let username;
 
     // Gets info about user from DB
     if (token.sub) {
-        externalID = token.sub;
-        id = await getAll(`SELECT * FROM users WHERE externalID=$id`, {"$id": externalID});
-        id = id[0].id;
+        const externalID = token.sub;
+        const response = await getAll(`SELECT * FROM users WHERE externalID=$id`, {"$id": externalID});
+        id = response[0].id;
+        username = response[0].username;
     } else {
-        externalID = NaN;
-        id = -1;
+        id = Number(token.name);
+        username = token.email;
     }
     
 
@@ -54,7 +55,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     // Checks to make sure the message exists & the user created thew  message
     const messageQuery: String = "SELECT * FROM messages WHERE 'author'=$id AND 'id'=$messageid";
-    const message = await getAll(messageQuery, {"$id": id, "$messageID": messageID})
+    const message = await getAll(messageQuery, {"$id": id, "$messageID": messageID});
 
     if (message.length === 0) {
         return NextResponse.json(
@@ -62,15 +63,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
                 error: "You do not own that message"
             }),
             { status: 403 }
-        )
+        );
     }
 
     // Updates the message
-    const query: String = "UPDATE users SET 'content'='$message' WHERE 'messageID'=$messageID AND 'author'=$authorID"
-    const response = await changeDB(query, {$message: newMessageContent, $messageID: messageID, $authorID: id})
-
-    let username: any = await getAll(`SELECT * FROM users WHERE externalID=${externalID}`);
-    username = username[0].username;
+    const query: String = "UPDATE users SET 'content'='$message' WHERE 'messageID'=$messageID AND 'author'=$authorID";
+    const response = await changeDB(query, {$message: newMessageContent, $messageID: messageID, $authorID: id});
 
     // Updates the time the user was last active
     updateActivity(username);

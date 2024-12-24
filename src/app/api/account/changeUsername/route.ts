@@ -21,22 +21,19 @@ export async function POST(req: NextRequest, res: NextResponse) {
         );
     }
 
-    let externalID;
     let username;
+    let id;
 
     // Gets info about user from DB
     if (token.sub) {
-        externalID = token.sub;
+        const externalID = token.sub;
         username = await getAll(`SELECT * FROM users WHERE externalID=${externalID}`);
         username = username[0].username;
+        id = username[0].id
     } else {
-        externalID = NaN;
-        username = "";
+        username = token.email;
+        id = Number(token.name)
     }
-
-    // Gets users ID from the DB
-    const dbIdResult = await getAll(`SELECT id FROM users WHERE username='${username}';`);
-    const id = dbIdResult[0]["id"];
 
     const body: any = await req.json();
     const newUsername = body["username"];

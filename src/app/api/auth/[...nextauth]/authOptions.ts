@@ -32,16 +32,25 @@ export const authOptions: NextAuthOptions = {
             // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
             // You can also use the `req` object to obtain additional parameters
             // (i.e., the request IP address)
-            const res = await fetch("/api/accounts/credentials", {
+            const res = await fetch("http://localhost:3001/api/accounts/credentials", {
               method: 'POST',
               body: JSON.stringify(credentials),
               headers: { "Content-Type": "application/json" }
             })
             const user = await res.json()
+
+            const response = await fetch(`http://localhost:3001/api/accounts/get?username=${credentials?.username}`);
+            const json = await response.json();
+            const userID = json['id'];
+
+            const userObj = {
+              email: credentials?.username,
+              name: userID
+            }
       
             // If no error and we have user data, return it
             if (res.ok && user) {
-              return user
+              return userObj;
             }
             // Return null if user data could not be retrieved
             return null
@@ -66,19 +75,23 @@ export const authOptions: NextAuthOptions = {
             externalID = Number(account?.providerAccountId);
             username = profile?.login;
 
+            const response = await accountExists(type, provider, externalID);
+
+            if (!response) {
+              const account = await createAccount("sso", username, null, provider, externalID);
+            }
+
             updateActivity(username);
           } else {
-            if (user) {
-              return true;
-            } else {
-              return false;
+            const username: string|null = credentials?.username;
+
+            const response = await accountExists("credentials", username, null);
+
+            if (!response) {
+              const account = createAccount("credentials", username, credentials?.password, null, null);
             }
-          }
 
-          const response = await accountExists(type, provider, externalID);
-
-          if (!response) {
-            const account = await createAccount("sso", username, null, provider, externalID);
+            updateActivity(username)
           }
 
           return true;

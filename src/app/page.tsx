@@ -1,6 +1,10 @@
+'use client'
+
 import { Link } from "@nextui-org/link";
 
 import styles from "./styles/home.module.css";
+
+import { useSession } from "next-auth/react";
 
 export default function Home() {
   return (
