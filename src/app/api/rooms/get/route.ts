@@ -29,6 +29,17 @@ export async function GET(req: NextRequest, res: NextResponse) {
     // Gets the rooms from the DB and formats array correctly.
     let rooms = await getAll(`SELECT * FROM users WHERE username=$username`, {"$username": username});
     rooms = rooms[0]["rooms"];
+
+    if (rooms === null || rooms === undefined || rooms.length === 0) {
+        return NextResponse.json(
+            JSON.stringify({
+                "rooms": [],
+                "names": []
+            }),
+            {status: 200}
+        )
+    }
+
     rooms = rooms.replace('0,', '');
     rooms = rooms.split(",");
     rooms.pop(); 

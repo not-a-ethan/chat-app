@@ -74,6 +74,15 @@ export default function Rooms() {
             let rooms = jsonData["rooms"];
             let names = jsonData["names"];
 
+            if (rooms.length === 0) {
+              setRoomsDiv(
+                <span>
+                  <Button className={`${styles.singleRoom}`} onPress={createRoom}>+ Create room</Button>
+                </span>
+              );
+              return;
+            }
+
             const roomsArray = rooms.split(",");
             roomsArray.pop();
 
