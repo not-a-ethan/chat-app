@@ -5,6 +5,8 @@ import { getToken } from "next-auth/jwt"
 import { getAll } from "@/app/database/get"
 import { changeDB } from "@/app/database/change"
 
+import accountInfo from '@/utils/accountinfo'
+
 import { updateActivity } from "@/lib/updateActivity"
 
 export async function POST(req: NextRequest, res: NextResponse) {
@@ -21,19 +23,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
         );
     }
 
-    let username;
-    let id;
-
-    // Gets info about user from DB
-    if (token.sub) {
-        const externalID = token.sub;
-        const response = await getAll(`SELECT * FROM users WHERE externalID=$id`, {"$id": externalID});
-        id = response[0].id;
-        username = response[0].username;
-    } else {
-        id = Number(token.name);
-        username = token.email;
-    }
+    // Gets info about account
+    const info = await accountInfo(token);
+    let username = info.username;
+    let id = info.id;
     
 
     const body = await req.json();

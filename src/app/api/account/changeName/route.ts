@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 
 import { getToken } from "next-auth/jwt"
 
-import { getAll } from "@/app/database/get"
 import { changeDB } from '@/app/database/change'
 
+import accountInfo from '@/utils/accountinfo'
 import { updateActivity } from '@/lib/updateActivity'
 
 export async function POST(req: NextRequest, res: NextResponse) {
@@ -21,16 +21,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
         );
     }
 
-    let username;
-
-    // Gets info about user from DB
-    if (token.sub) {
-        const externalID = token.sub;
-        username = await getAll(`SELECT * FROM users WHERE externalID=${externalID}`);
-        username = username[0].username;
-    } else {
-        username = token.email;
-    }
+    // Gets info about account
+    const username: string = (await accountInfo(token)).username;
 
     const body: any = await req.json();
     const newName = body["name"];

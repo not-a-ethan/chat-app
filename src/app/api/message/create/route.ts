@@ -1,11 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server';
 
-import { getToken } from "next-auth/jwt"
+import { getToken } from "next-auth/jwt";
 
-import { getAll } from "@/app/database/get"
-import { changeDB } from "@/app/database/change"
+import { getAll } from "@/app/database/get";
+import { changeDB } from "@/app/database/change";
 
-import { updateActivity } from "@/lib/updateActivity"
+import accountInfo from '@/utils/accountinfo';
+
+import { updateActivity } from "@/lib/updateActivity";
 
 export async function POST(req: NextRequest, res: NextResponse) {
     // Get info about user authentication
@@ -21,28 +23,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
         );
     }
 
-    // for GH sso
-    /*
-    {
-    name: 'name',
-    email: 'email@example.com',
-    picture: 'https://avatars.githubusercontent.com/u/something?v=4',
-    sub: 'external id',
-    iat: ?,
-    exp: ?,
-    jti: '?'
-    }
-   */
-
-    let username;
-
-    if (token.sub) {
-        const externalID = token.sub;
-        const response = await getAll(`SELECT * FROM users WHERE externalID=$id`, {"$id": externalID});
-        username = response[0].username;
-    } else {
-        username = token.email;
-    }
+    // Gets info about account
+    const info = await accountInfo(token);
+    const username = info.username;
 
     const body = await req.json();
     const roomID: Number = body["roomID"];

@@ -5,6 +5,8 @@ import { getToken } from "next-auth/jwt"
 import { getAll } from "@/app/database/get"
 import { changeDB } from "@/app/database/change"
 
+import accountInfo from '@/utils/accountinfo'
+
 import { updateActivity } from "@/lib/updateActivity"
 
 export async function addUser(roomID: Number, username: String) {
@@ -32,29 +34,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
         );
     }
 
-    // for GH sso
-    /*
-    {
-    name: 'name',
-    email: 'email@example.com',
-    picture: 'https://avatars.githubusercontent.com/u/something?v=4',
-    sub: 'external id',
-    iat: ?,
-    exp: ?,
-    jti: '?'
-    }
-   */
-
-    let username;
-
-    // Gets info about user from DB
-    if (token.sub) {
-        const externalID = token.sub;
-        username = await getAll(`SELECT * FROM users WHERE externalID=${externalID}`);
-        username = username[0].username;
-    } else {
-        username = token.email;
-    }
+    // Gets info about account
+    const info = await accountInfo(token);
+    const username = info.username;
 
     const body = await req.json();
     const roomID: Number = body["roomID"];

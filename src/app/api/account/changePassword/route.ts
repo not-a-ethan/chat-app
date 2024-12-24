@@ -9,6 +9,8 @@ import { checkCredentials } from '@/lib/checkCredentials';
 import { getAll } from "@/app/database/get"
 import { changeDB } from '@/app/database/change'
 
+import accountInfo from '@/utils/accountinfo';
+
 import { updateActivity } from '@/lib/updateActivity'
 
 export async function POST(req: NextRequest, res: NextResponse) {
@@ -25,18 +27,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
         );
     }
 
-    let username;
-    let type;
-
-    // Gets info about user from DB// Gets info about user from DB
-    if (token.sub) {
-        const externalID = token.sub;
-        username = await getAll(`SELECT * FROM users WHERE externalID=${externalID}`);
-        username = username[0].username;
-        type = "sso";
-    } else {
-        username = token.email;
-    }
+    // Gets info about account
+    const info = await accountInfo(token);
+    const username = info.username;
+    const type = info.type;
 
     // Gets users ID from the DB
     const dbIdResult = await getAll(`SELECT id FROM users WHERE username='${username}';`);

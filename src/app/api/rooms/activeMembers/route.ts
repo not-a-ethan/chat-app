@@ -4,6 +4,8 @@ import { getToken } from "next-auth/jwt"
 
 import { getAll } from "@/app/database/get"
 
+import accountInfo from '@/utils/accountinfo'
+
 import { updateActivity } from '@/lib/updateActivity'
 
 export async function GET(req: NextRequest, res: NextResponse) {
@@ -20,16 +22,9 @@ export async function GET(req: NextRequest, res: NextResponse) {
         );
     }
 
-    let username;
-
-    // Gets info about user from DB
-    if (token.sub) {
-        const externalID = token.sub;
-        username = await getAll(`SELECT * FROM users WHERE externalID=${externalID}`);
-        username = username[0].username;
-    } else {
-        username = token.email;
-    }
+    // Gets info about account
+    const info = await accountInfo(token);
+    let username = info.username;
 
     // Get room ID
     const searchParams = req.nextUrl.searchParams;
