@@ -32,14 +32,14 @@ export const authOptions: NextAuthOptions = {
             // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
             // You can also use the `req` object to obtain additional parameters
             // (i.e., the request IP address)
-            const res = await fetch("http://localhost:3001/api/accounts/credentials", {
+            const res = await fetch(`${process.env.NEXTAUTH_URL}/api/accounts/credentials`, {
               method: 'POST',
               body: JSON.stringify(credentials),
               headers: { "Content-Type": "application/json" }
             })
             const user = await res.json()
 
-            const response = await fetch(`http://localhost:3001/api/accounts/get?username=${credentials?.username}`);
+            const response = await fetch(`${process.env.NEXTAUTH_URL}/api/accounts/get?username=${credentials?.username}`);
             const json = await response.json();
             const userID = json['id'];
 
