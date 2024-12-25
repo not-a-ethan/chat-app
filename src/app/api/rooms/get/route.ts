@@ -51,9 +51,16 @@ export async function GET(req: NextRequest, res: NextResponse) {
     roomArr.pop();
     
     // Gets the names of all the rooms from DB
-    let names = [];
+    const names = [];
+    const finalRooms = [];
+    
     for (let i = 0; i < roomArr.length; i++) {
-        let currentName = await getAll(`SELECT name FROM rooms WHERE id=${roomArr[i]}`, {});
+        let currentName = await getAll(`SELECT name FROM rooms WHERE id=${roomArr[i]}`, {}); 
+        if (currentName.length === 0) {
+            continue;
+        }
+
+        finalRooms.push(roomArr[i])
         currentName = currentName[0]["name"];
         names.push(currentName);
     }
@@ -64,7 +71,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     return NextResponse.json(
         JSON.stringify({
-            "rooms": rooms,
+            "rooms": finalRooms.join(",") + ",",
             "names": names
         }),
         {status: 200}
