@@ -41,6 +41,49 @@ const Chat = forwardRef((props: any, ref: any) => {
         })
     }
 
+    function editMessage(e: any) {
+        const messageID: string = e.target.id.split("-");
+
+        const newContent = prompt("What should the message say now?");
+
+        const response = fetch("../api/message/modify", {
+            method: "POST",
+            body: JSON.stringify({
+                messageID: messageID,
+                content: newContent
+            })
+        });
+
+        toast.promise(response, {
+            loading: "Editing message",
+            error: "Something went wrong editing the message. Please try again",
+            success: "Message was edited"
+        });
+    }
+
+    function deleteMessage(e: any) {
+        const messageID: string = e.target.id.split("-");
+
+        const confirmation = confirm("Are you sure you want to delete the message? THIS CANNOT BE UNDONE");
+
+        if (!confirmation) {
+            return;
+        }
+
+        const response = fetch("../api/message/delete", {
+            method: "POST",
+            body: JSON.stringify({
+                messageID: messageID,
+            })
+        });
+
+        toast.promise(response, {
+            loading: "Deleting message",
+            error: "Something went wrong deleting the message. Please try again",
+            success: "Message was deleted"
+        });
+    }
+
     function loadMessages() {
         if (!document.hasFocus()) return;
 
@@ -81,13 +124,13 @@ const Chat = forwardRef((props: any, ref: any) => {
                 <div className={styles.chat}>
                     {messages.map((message: any) => (
                         <div key={message.id}>
-                            <Avatar name={message.author} className={`${styles.avatar}`} /> <span>{message.author}</span> <span className={`${styles.timestamp}`}>{formatDate(message.created)}</span>
+                            <Avatar name={message.username} className={`${styles.avatar}`} /> <span>{message.username}</span> <span className={`${styles.timestamp}`}>{formatDate(message.created)}</span>
                             <p className={`${styles.message}`}> &nbsp; &nbsp; {message.content}</p>
                             <div>
-                                <Button size="sm" id={`0-${message.id}`} onPress={reaction}>👍</Button>
-                                <Button size="sm" id={`1-${message.id}`} onPress={reaction}>👎</Button>
-                                <Button size="sm" id={`2-${message.id}`} onPress={reaction}>❤️</Button>
-                                {message.isAuthor ? <span className={`${styles.authorActions}`}><Divider orientation="vertical" /> <Button size="sm" id={message.id}>✏️</Button><Button size="sm" id={message.id}>🗑️</Button></span> : ''}
+                                <Button size="sm" id={`0-${message.id}`} onPress={reaction}>👍 {message["+1"].substring(2).length/2}</Button>
+                                <Button size="sm" id={`1-${message.id}`} onPress={reaction}>👎 {message["-1"].substring(2).length/2}</Button>
+                                <Button size="sm" id={`2-${message.id}`} onPress={reaction}>❤️ {message["heart"].substring(2).length/2}</Button>
+                                {message.isAuthor ? <span className={`${styles.authorActions}`}><Divider orientation="vertical" /> <Button size="sm" id={message.id} onPress={editMessage}>✏️</Button><Button size="sm" id={message.id} onPress={deleteMessage}>🗑️</Button></span> : ''}
                             </div>
                         </div>
                     ))}

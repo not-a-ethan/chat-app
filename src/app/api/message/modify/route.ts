@@ -29,12 +29,13 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const username = info.username;
 
     const body = await req.json();
-    const messageID: Number = body["messageID"];
+    const messageID = body["messageID"];
     const newMessageContent: String = body["content"];
 
     // Checks to make sure the message exists & the user created thew  message
-    const messageQuery: String = "SELECT * FROM messages WHERE 'author'=$id AND 'id'=$messageid";
-    const message = await getAll(messageQuery, {"$id": id, "$messageID": messageID});
+    const messageQuery: String = `SELECT * FROM messages WHERE id=$i AND author=${id};`;
+    const messageQueryAguemnts = {"$i": messageID[0]};
+    const message = await getAll(messageQuery, messageQueryAguemnts);
 
     if (message.length === 0) {
         return NextResponse.json(
@@ -46,8 +47,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
 
     // Updates the message
-    const query: String = "UPDATE users SET 'content'='$message' WHERE 'messageID'=$messageID AND 'author'=$authorID";
-    const response = await changeDB(query, {$message: newMessageContent, $messageID: messageID, $authorID: id});
+    const query: String = `UPDATE messages SET content=$message WHERE id=$messageID AND author=${id};`;
+    const updateParams = {$message: newMessageContent, $messageID: messageID[0]}
+    const response = changeDB(query, updateParams);
 
     // Updates the time the user was last active
     updateActivity(username);

@@ -24,6 +24,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     // Gets info about account
     const info = await accountInfo(token);
     const username = info.username;
+    const userID = info.id;
 
     // Get room ID
     const searchParams = req.nextUrl.searchParams;
@@ -59,10 +60,14 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const messages = await getAll(`SELECT * FROM messages WHERE roomID=$roomID ORDER BY id ASC LIMIT 25;`, {"$roomID": roomID});
 
     for (let i = 0; i < messages.length; i++) {
-        if (messages[i]["author"] == username) {
+        if (messages[i]["author"] == userID) {
             messages[i].isAuthor = true;
+            messages[i].username = username;
         } else {
             messages[i].isAuthor = false;
+
+            const userResult = await getAll(`SELECT username FROM users WHERE id=${messages[i].author}`);
+            messages[i].username = userResult[0].username;
         }
     }
 
