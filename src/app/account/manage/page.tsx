@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import EditUsername from "./components/username";
 import EditPassword from "./components/password";
 import EditName from "./components/name";
+import EditPfp from "./components/pfp"
 
 export default function Manage() {
   const { data: session, status } = useSession();
@@ -27,6 +28,7 @@ export default function Manage() {
       <br />
       <EditPassword />
       <br />
+      <EditPfp />
       <br />
       <EditName />
     </div>
