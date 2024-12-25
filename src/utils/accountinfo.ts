@@ -4,7 +4,9 @@ export default async function accountInfo(token: any) {
     const userObj = {
         username: '',
         id: -1,
-        type: "credentials"
+        type: "credentials",
+        rooms: [],
+        recentlyActive: -1
     };
 
     if (token.sub) {
@@ -16,6 +18,13 @@ export default async function accountInfo(token: any) {
     } else {
         userObj.username = token.email;
     }
+
+    const userInfoResult = await getAll(`SELECT * FROM users WHERE username='${userObj.username}'`);
+    const userInfo = userInfoResult[0];
+
+    userObj.id = userInfo["id"];
+    userObj.rooms = userInfo["rooms"];
+    userObj.recentlyActive = userInfo["recentlyActive"];
 
     return userObj;
 };
