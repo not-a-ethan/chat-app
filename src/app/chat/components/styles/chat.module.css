@@ -1,5 +1,7 @@
 .chat {
     overflow-y: scroll;
+
+    min-width: 20vw;
 }
 
 .author {
@@ -20,4 +22,8 @@
 
 .timestamp {
     font-size: small;
+}
+
+.authorActions {
+    display: inline-block;
 }
