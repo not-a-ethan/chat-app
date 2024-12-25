@@ -32,4 +32,7 @@ NEXTAUTH_URL=<URL OF APPLICATION INCLUDING PROTOCAL>
 # Github SSO
 GITHUB_ID=<GITHUB AUTH ID>
 GITHUB_SECRET=<GITHUB AUTH SECRET>
+
+# Site Config
+allowAttachmenbts=<0 to not allow, 1 to allow>
 ```
