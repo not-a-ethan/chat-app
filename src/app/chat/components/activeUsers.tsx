@@ -34,6 +34,31 @@ export default function ActiveUsers() {
       });
     }
 
+    function deleteRoom() {
+      const confirmation = confirm("Are you sure you want to delet the room?");
+      let data: any;
+
+      if (!confirmation) return;
+
+      const deleteRoom = fetch("../api/rooms/delete", {
+        method: "POST",
+        body: JSON.stringify({
+          "id": room,
+        })
+      }).then((response) => {
+        let json = response.json();
+        if (!(response.status >= 200) || !(response.status < 300)) {
+          return response.json().then(Promise.reject.bind(Promise))
+        }
+      });
+      
+      toast.promise(deleteRoom, {
+        loading: "Deleting room",
+        success: "Deleted the room",
+        error: "Error deleting the room, please try again"
+      });
+    }
+
     function getActiveMembers() {
         if (!document.hasFocus()) return;
         let data: any;
@@ -66,6 +91,10 @@ export default function ActiveUsers() {
               <br />
               <Button onPress={addUser}>
                 Add Member
+              </Button>
+
+              <Button onPress={deleteRoom}>
+                Delete room
               </Button>
             </div>
           );

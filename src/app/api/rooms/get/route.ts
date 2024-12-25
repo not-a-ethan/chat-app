@@ -63,8 +63,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         finalRooms.push(roomArr[i])
         currentName = currentName[0]["name"];
         names.push(currentName);
-    }
-    
+    }   
 
     // Updates the time the user was last active
     updateActivity(username);
