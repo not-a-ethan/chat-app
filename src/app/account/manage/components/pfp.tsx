@@ -7,7 +7,7 @@ import { Button } from "@nextui-org/button";
 import styles from "./styles/name.module.css";
 
 export default function EditPfp() {
-    function changeName() {
+    function changePFP() {
         const input: HTMLInputElement = document.getElementById("pfp");
         const newPfp = input.files[0];
 
@@ -24,12 +24,28 @@ export default function EditPfp() {
             });
     
             toast.promise(promise, {
-               loading: "Changing name",
-               error: "Something went wrong, name WAS NOT changed",
-               success: "Name was changed" 
+               loading: "Changing pfp",
+               error: "Something went wrong, pfp WAS NOT changed",
+               success: "Pfp was changed" 
             });
         };
         reader.readAsDataURL(newPfp);
+    }
+
+    function removePFP() {
+        const promise = fetch("../../api/account/changePFP", {
+            method: "POST",
+            body: JSON.stringify({
+                "pfp": null,
+                "removing": true
+            })
+        });
+
+        toast.promise(promise, {
+            loading: "Changing pfp",
+            error: "Something went wrong, pfp WAS NOT changed",
+            success: "Pfp was changed" 
+         });
     }
 
     return (
@@ -37,7 +53,11 @@ export default function EditPfp() {
             <Form className={`${styles.container}`}>
                 <Input label="New pfp" type="file" id="pfp" className={`${styles.input}`} />
 
-                <Button onPress={changeName} className={`${styles.button}`}>Change pfp!</Button>
+                <Button onPress={changePFP} className={`${styles.button}`}>Change pfp!</Button>
+            </Form>
+
+            <Form className={`${styles.container}`}>
+                <Button onPress={removePFP} className={`${styles.button}`}>Remove pfp!</Button>
             </Form>
         </>
     );
