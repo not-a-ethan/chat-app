@@ -67,7 +67,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
 
     // Sends the message
-    const response = changeDB(`INSERT INTO messages (author, zcontent, roomID, created) values ($userID, $content, $id, ${Date.now()})`, {$userID: userID, $content: messageContent, $id: roomID})
+    const response = changeDB(`INSERT INTO messages (author, content, roomID, created) values ($userID, $content, $id, ${Date.now()})`, {$userID: userID, $content: messageContent, $id: roomID})
 
     // Updates the time the user was last active
     updateActivity(username);

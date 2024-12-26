@@ -120,11 +120,13 @@ const Chat = forwardRef((props: any, ref: any) => {
                 return formattedDate;
             }
 
+            console.log(messages)
+
             setMessages(
                 <div className={styles.chat}>
                     {messages.map((message: any) => (
                         <div key={message.id}>
-                            <Avatar name={message.username} className={`${styles.avatar}`} /> <span>{message.username}</span> <span className={`${styles.timestamp}`}>{formatDate(message.created)}</span>
+                            <Avatar src={message.pfp} name={message.username} className={`${styles.avatar}`} /> <span>{message.username}</span> <span className={`${styles.timestamp}`}>{formatDate(message.created)}</span>
                             <p className={`${styles.message}`}> &nbsp; &nbsp; {message.content}</p>
                             <div>
                                 <Button size="sm" id={`0-${message.id}`} onPress={reaction}>👍 {message["+1"].substring(2).length/2}</Button>

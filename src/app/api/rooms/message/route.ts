@@ -60,14 +60,19 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const messages = await getAll(`SELECT * FROM messages WHERE roomID=$roomID ORDER BY id ASC LIMIT 25;`, {"$roomID": roomID});
 
     for (let i = 0; i < messages.length; i++) {
+        const userResult = await getAll(`SELECT username, pfp FROM users WHERE id=${messages[i].author}`);
         if (messages[i]["author"] == userID) {
             messages[i].isAuthor = true;
             messages[i].username = username;
         } else {
             messages[i].isAuthor = false;
-
-            const userResult = await getAll(`SELECT username FROM users WHERE id=${messages[i].author}`);
             messages[i].username = userResult[0].username;
+        }
+        
+        if (userResult[0].pfp != null) {
+            messages[i].pfp = userResult[0].pfp;
+        } else {
+            messages[i].pfp = "";
         }
     }
 
