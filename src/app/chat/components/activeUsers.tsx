@@ -3,6 +3,7 @@
 import React, { useState, useContext, forwardRef, useEffect } from "react";
 
 import { Button } from "@nextui-org/button";
+import { Avatar } from "@nextui-org/react";
 
 import toast from "react-hot-toast";
 
@@ -59,7 +60,7 @@ export default function ActiveUsers() {
       });
     }
 
-    function removeMember(e) {
+    function removeMember(e: any) {
       const id = e.target.id;
       let data: any;
 
@@ -105,7 +106,7 @@ export default function ActiveUsers() {
             <div>
               {users.map((user: any) => (
                 <div key={user}>
-                  <p>{user[0]}</p>
+                  <Avatar src={user[2]} name={user[0]} /> <span>{user[0]}</span>
                   <Button isIconOnly id={user[1]} onPress={removeMember}>🗑️</Button>
                 </div>
               ))}

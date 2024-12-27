@@ -19,6 +19,7 @@ export default function Home() {
         <li>Next.js</li>
         <li>React Hot Toast</li>
         <li>SQLite</li>
+        <li>NextUI</li>
       </ul>
 
       <br />
