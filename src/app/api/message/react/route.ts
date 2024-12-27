@@ -26,15 +26,26 @@ export async function POST(req: NextRequest) {
     // Gets info about account
     const info = await accountInfo(token);
     const id = info.id;
-    const rooms = info.rooms;
+    const rooms: Array<number> = info.rooms;
 
     const body = await req.json();
     const messageID: number = body["messageID"];
     const reactionType: number = Number(body["reaction"]);
 
     // Gets the message from the DB
+    interface messageInfoType {
+        id: number,
+        author: number,
+        content: string,
+        "+1": string,
+        "-1": string,
+        heart: string,
+        roomID: number,
+        created: number
+    };
+
     const messageInfoResult: any = await getAll(`SELECT * FROM messages WHERE id=$i`, {"$i": messageID});
-    const messageInfo: any = messageInfoResult[0];
+    const messageInfo: messageInfoType = messageInfoResult[0];
 
     // Checks that the user is in the room that the message is from
     if (!rooms.includes(messageInfo["roomID"])) {

@@ -23,7 +23,7 @@ export default async function accountInfo(token: any) {
     const userInfo = userInfoResult[0];
 
     userObj.id = userInfo["id"];
-    userObj.rooms = userInfo["rooms"];
+    userObj.rooms = userInfo["rooms"].split(",").shift();
     userObj.recentlyActive = userInfo["recentlyActive"];
 
     return userObj;
