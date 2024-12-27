@@ -25,7 +25,7 @@ export const authOptions: NextAuthOptions = {
             password: { label: "Password", type: "password" }
           },
 
-          async authorize(credentials, req) {
+          async authorize(credentials: any, req: any): Promise<any> {
             // You need to provide your own logic here that takes the credentials
             // submitted and returns either a object representing a user or value
             // that is false/null if the credentials are invalid.
@@ -63,7 +63,7 @@ export const authOptions: NextAuthOptions = {
         })
       ],
       callbacks: {
-        async signIn({ user, account, profile, email, credentials }) {
+        async signIn({ user, account, profile, email, credentials }: any): Promise<any> {
           let type: string;
           let provider: string;
           let externalID: number;
@@ -83,13 +83,13 @@ export const authOptions: NextAuthOptions = {
 
             updateActivity(username);
           } else {
-            const username: string | null = credentials?.username;
+            const username: any = credentials?.username;
 
             if (username === null) {
               return;
             }
 
-            const response = await accountExists("credentials", username, null);
+            const response = await accountExists("credentials", username, NaN);
 
             if (!response) {
               const account = createAccount("credentials", username, credentials?.password, null, null);
