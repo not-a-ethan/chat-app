@@ -7,7 +7,7 @@ import { Avatar } from "@nextui-org/react";
 
 import toast from "react-hot-toast";
 
-import { Room } from "../page";
+import { Room } from "../room";
 
 export default function ActiveUsers() {
     const [users, setUsers] = useState(<></>);

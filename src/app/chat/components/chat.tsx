@@ -8,7 +8,7 @@ import { Divider } from "@nextui-org/divider";
 
 import toast from "react-hot-toast";
 
-import { Room } from "../page";
+import { Room } from "../room";
 
 import styles from "./styles/chat.module.css";
 

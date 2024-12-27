@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import React, { useState, createContext } from "react";
+import React, { useState } from "react";
 
 import { useSession } from "next-auth/react";
 
@@ -10,6 +10,8 @@ import Chat from './components/chat';
 import ActiveUsers from './components/activeUsers';
 import Rooms from './components/rooms';
 import DraftMessage from './components/createMessage';
+
+import { Room } from './room';
 
 import styles from "./chat.module.css";
 
@@ -50,5 +52,3 @@ export default function Page() {
     </div>
   );
 }
-
-export const Room = createContext(0);
