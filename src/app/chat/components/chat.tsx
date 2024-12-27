@@ -120,8 +120,6 @@ const Chat = forwardRef((props: any, ref: any) => {
                 return formattedDate;
             }
 
-            console.log(messages)
-
             setMessages(
                 <div className={styles.chat}>
                     {messages.map((message: any) => (

@@ -63,7 +63,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const usernames = [];
 
     for (let i = 0; i < users.length; i++) {
-        usernames.push(users[i].username);
+        usernames.push([users[i].username, users[i].id]);
     }
     
     return NextResponse.json(

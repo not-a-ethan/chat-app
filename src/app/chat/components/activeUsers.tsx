@@ -59,6 +59,27 @@ export default function ActiveUsers() {
       });
     }
 
+    function removeMember(e) {
+      const id = e.target.id;
+      let data: any;
+
+      if (id == undefined || id?.trim() == '') return;
+
+      const addUser = fetch("../api/rooms/addMember", {
+        method: "POST",
+        body: JSON.stringify({
+          "roomID": room,
+          "userID": id
+        })
+      });
+      
+      toast.promise(addUser, {
+        loading: "Remvoing user",
+        success: "Removed the user from the room",
+        error: "Error removing the user, please try again"
+      });
+    }
+
     function getActiveMembers() {
         if (!document.hasFocus()) return;
         let data: any;
@@ -85,7 +106,10 @@ export default function ActiveUsers() {
           setUsers(
             <div>
               {users.map((user: any) => (
-                <div key={user}>{user}</div>
+                <div key={user}>
+                  <p>{user[0]}</p>
+                  <Button isIconOnly id={user[1]} onPress={removeMember}>🗑️</Button>
+                </div>
               ))}
 
               <br />
