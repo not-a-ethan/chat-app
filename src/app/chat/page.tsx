@@ -13,8 +13,6 @@ import DraftMessage from './components/createMessage';
 
 import styles from "./chat.module.css";
 
-export const Room = createContext(0);
-
 export default function Page() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -52,3 +50,5 @@ export default function Page() {
     </div>
   );
 }
+
+export const Room = createContext(0);
