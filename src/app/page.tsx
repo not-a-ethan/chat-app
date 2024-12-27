@@ -4,7 +4,7 @@ import { Link } from "@nextui-org/link";
 
 import styles from "./styles/home.module.css";
 
-export default function Home() {
+export default function Page() {
   return (
     <div className={`${styles.all} pageContainer`}>
       <h1>Chat App</h1>

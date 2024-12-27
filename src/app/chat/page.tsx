@@ -15,7 +15,7 @@ import styles from "./chat.module.css";
 
 export const Room = createContext(0);
 
-export default function Home() {
+export default function Page() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
