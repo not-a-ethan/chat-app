@@ -8,9 +8,9 @@ import styles from "./styles/password.module.css";
 
 export default function EditPassword() {
     function changePassword() {
-        const password: HTMLInputElement = document.getElementById("password");
-        const confirm: HTMLInputElement = document.getElementById("confirm");
-        const current: HTMLInputElement = document.getElementById("current");
+        const password: any = document.getElementById("password");
+        const confirm: any = document.getElementById("confirm");
+        const current: any = document.getElementById("current");
         const newPassword = password.value;
         const confirmPassword = confirm.value;
         const currentPassowrd = current.value;

@@ -8,7 +8,7 @@ import styles from "./styles/name.module.css";
 
 export default function EditName() {
     function changeName() {
-        const input: HTMLInputElement = document.getElementById("name");
+        const input: any = document.getElementById("name");
         const newName = input.value;
 
         const promise = fetch("../../api/account/changeName", {

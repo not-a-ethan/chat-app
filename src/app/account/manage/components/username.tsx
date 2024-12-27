@@ -8,7 +8,7 @@ import styles from "./styles/username.module.css";
 
 export default function EditUsername() {
     function changeUsername() {
-        const input: HTMLInputElement = document.getElementById("username");
+        const input: any = document.getElementById("username");
         const newUsername = input.value;
 
         const promise = fetch("../../api/account/changeUsername", {

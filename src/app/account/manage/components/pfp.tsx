@@ -8,7 +8,7 @@ import styles from "./styles/pfp.module.css";
 
 export default function EditPfp() {
     function changePFP() {
-        const input: HTMLInputElement = document.getElementById("pfp");
+        const input: any = document.getElementById("pfp");
         const newPfp = input.files[0];
 
         const reader = new FileReader();
