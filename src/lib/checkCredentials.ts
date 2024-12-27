@@ -13,8 +13,8 @@ export async function checkCredentials(username: string, password: string): Prom
     } else {
         const query = `SELECT * FROM users WHERE username='${username}';`
 
-        const dbResult: string = await getAll(query);
-        const hash: string = dbResult[0]["password"];
+        const dbResult: any = await getAll(query);
+        const hash: any = dbResult[0]["password"];
 
         const correct = await bcrypt.compare(password, hash);
 

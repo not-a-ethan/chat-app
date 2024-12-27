@@ -11,7 +11,7 @@ export function createAccount(type: string, username: string, password: string|n
         return false;
     }
 
-    const user: boolean = changeDB(query);
+    const user: boolean = changeDB(query, {});
 
     updateActivity(username)
 
