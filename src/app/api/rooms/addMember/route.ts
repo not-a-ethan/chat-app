@@ -3,22 +3,12 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getToken } from "next-auth/jwt"
 
 import { getAll } from "@/app/database/get"
-import { changeDB } from "@/app/database/change"
 
 import accountInfo from '@/utils/accountinfo'
 
 import { updateActivity } from "@/lib/updateActivity"
 
-async function addUser(roomID: Number, username: String) {
-    const sqlCurrentRooms = await getAll(`SELECT rooms FROM users WHERE username=$username`, {"$username": username});
-    const currentRooms = sqlCurrentRooms[0]["rooms"];
-    const newRooms = `${currentRooms}${roomID},`;
-
-    const query = `UPDATE users SET rooms=$rooms WHERE username=$username`;
-    const result = await changeDB(query, {"$rooms": newRooms, "$username": username})
-
-    return result;
-}
+import { addUser } from '../create/addUser';
 
 export async function POST(req: NextRequest) {
     // Get info about user authentication

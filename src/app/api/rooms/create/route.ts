@@ -9,7 +9,7 @@ import accountInfo from '@/utils/accountinfo'
 
 import { updateActivity } from "@/lib/updateActivity"
 
-import { addUser } from '../addMember/route'
+import { addUser } from './addUser';
 
 export async function POST(req: NextRequest) {
     // Get info about user authentication
