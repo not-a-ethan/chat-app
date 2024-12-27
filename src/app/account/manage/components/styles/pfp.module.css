@@ -1,0 +1,24 @@
+.componentContainer {
+    width: fit-content;
+}
+
+.componentContainer > * {
+    margin: 0 auto;
+}
+
+.container {
+    display: grid;
+    width: fit-content;
+}
+
+.input {
+    grid-column: 1;
+}
+
+.button {
+    grid-column: 2;
+}
+
+.changeButton {
+    margin-top: 19%;
+}

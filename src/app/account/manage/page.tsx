@@ -7,7 +7,9 @@ import { useSession } from "next-auth/react";
 import EditUsername from "./components/username";
 import EditPassword from "./components/password";
 import EditName from "./components/name";
-import EditPfp from "./components/pfp"
+import EditPfp from "./components/pfp";
+
+import styles from "./manage.module.css";
 
 export default function Manage() {
   const { data: session, status } = useSession();
@@ -23,7 +25,11 @@ export default function Manage() {
   }
 
   return (
-    <div className='pageContainer'>
+    <div className={`${styles.pageContainer}`}>
+      <h1 className={`${styles.exlcude}`}>Settings!</h1>
+
+      <p className={`${styles.exlcude}`}>Here you can change your account settings</p>
+
       <EditUsername />
       <br />
       <EditPassword />
@@ -33,4 +39,4 @@ export default function Manage() {
       <EditName />
     </div>
   );
-}
+};

@@ -4,7 +4,7 @@ import { Form } from "@nextui-org/form";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 
-import styles from "./styles/name.module.css";
+import styles from "./styles/pfp.module.css";
 
 export default function EditPfp() {
     function changePFP() {
@@ -49,16 +49,18 @@ export default function EditPfp() {
     }
 
     return (
-        <>
+        <div className={`${styles.componentContainer}`}>
             <Form className={`${styles.container}`}>
                 <Input label="New pfp" type="file" id="pfp" className={`${styles.input}`} />
 
-                <Button onPress={changePFP} className={`${styles.button}`}>Change pfp!</Button>
+                <Button onPress={changePFP} className={`${styles.button} ${styles.changeButton}`}>Change pfp!</Button>
             </Form>
 
+            <br />
+
             <Form className={`${styles.container}`}>
-                <Button onPress={removePFP} className={`${styles.button}`}>Remove pfp!</Button>
+                <Button onPress={removePFP} className={`${styles.button}`} color="danger">Remove pfp!</Button>
             </Form>
-        </>
+        </div>
     );
 }

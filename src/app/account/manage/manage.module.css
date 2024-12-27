@@ -1,0 +1,17 @@
+.pageContainer {
+    margin-left: 25%;
+    margin-right: 25%;
+
+    padding: 2.5%;
+}
+
+.pageContainer > * {
+    margin: 0 auto;
+
+    padding: 2%;
+    border: 1px black dashed;
+}
+
+.exlcude {
+    border: none;
+}
