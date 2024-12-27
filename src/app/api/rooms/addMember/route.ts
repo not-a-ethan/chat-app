@@ -9,7 +9,7 @@ import accountInfo from '@/utils/accountinfo'
 
 import { updateActivity } from "@/lib/updateActivity"
 
-export async function addUser(roomID: Number, username: String) {
+async function addUser(roomID: Number, username: String) {
     const sqlCurrentRooms = await getAll(`SELECT rooms FROM users WHERE username=$username`, {"$username": username});
     const currentRooms = sqlCurrentRooms[0]["rooms"];
     const newRooms = `${currentRooms}${roomID},`;

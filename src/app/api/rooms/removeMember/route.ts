@@ -9,7 +9,7 @@ import accountInfo from '@/utils/accountinfo'
 
 import { updateActivity } from "@/lib/updateActivity"
 
-export async function removeUser(roomID: Number, userid: number) {
+async function removeUser(roomID: Number, userid: number) {
     const sqlCurrentRooms = await getAll(`SELECT rooms FROM users WHERE id=$id`, {"$id": userid});
     const currentRooms = sqlCurrentRooms[0]["rooms"];
     const newRooms = currentRooms.split(",").splice(currentRooms.indexOf(roomID), 1).join(",") + ",";
