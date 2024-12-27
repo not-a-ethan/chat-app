@@ -63,9 +63,7 @@ export default function ActiveUsers() {
       const id = e.target.id;
       let data: any;
 
-      if (id == undefined || id?.trim() == '') return;
-
-      const addUser = fetch("../api/rooms/addMember", {
+      const addUser = fetch("../api/rooms/removeMember", {
         method: "POST",
         body: JSON.stringify({
           "roomID": room,
