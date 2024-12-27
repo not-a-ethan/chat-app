@@ -55,6 +55,12 @@ export async function GET(req: NextRequest) {
     const finalRooms = [];
     
     for (let i = 0; i < roomArr.length; i++) {
+        if (roomArr.length === 1) {
+            if (roomArr[0] === '') {
+                break;
+            }
+        }
+
         let currentName = await getAll(`SELECT name FROM rooms WHERE id=${roomArr[i]}`, {}); 
         if (currentName.length === 0) {
             continue;

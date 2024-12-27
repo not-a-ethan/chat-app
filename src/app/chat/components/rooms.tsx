@@ -13,7 +13,7 @@ import styles from "./styles/rooms.module.css";
 export default function Rooms() {
     const [roomsRendered, setRoomsRenderd] = useState(false);
     const [roomsDiv, setRoomsDiv] = useState(<></>);
-    const [room, setRoom] = useContext(Room);
+    let room = useContext(Room);
 
     function setRoomFunc(e: any) {
         let id;
@@ -25,7 +25,7 @@ export default function Rooms() {
             return;
         }
   
-        setRoom(id);
+        room = id;
         sessionStorage.setItem('room', id);
     }
 
@@ -86,16 +86,18 @@ export default function Rooms() {
             const roomsArray = rooms.split(",");
             roomsArray.pop();
 
+            const finalRooms = []
+
             for (let i = 0; i < roomsArray.length; i++) {
-              roomsArray[i] = [roomsArray[i], names[i]];
+              finalRooms.push([roomsArray[i], names[i]]);
             }
     
-            setRoom(Number(roomsArray[0]));
+            room = Number(roomsArray[0]);
             sessionStorage.setItem('room', roomsArray[0][0]);
 
             setRoomsDiv(
                 <span>
-                  {roomsArray.map((thisRoom: any) => (
+                  {finalRooms.map((thisRoom: any) => (
                       <Button className={`${styles.singleRoom}`} id={thisRoom[0]} key={thisRoom[0]} onPress={setRoomFunc}>{thisRoom[1]}</Button>
                   ))}
 

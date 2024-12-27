@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     const roomID = sqlRoomID[0]["seq"];
 
     // Adds the creating user to the new room
-    const addedToRoom = addUser(roomID, username);
+    const addedToRoom = addUser((roomID + 1), username);
 
     // Updates the time the user was last active
     updateActivity(username);

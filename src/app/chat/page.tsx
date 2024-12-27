@@ -32,7 +32,7 @@ export default function Page() {
 
   return (
     <div className='pageContainer'>
-      <Room.Provider value={[room, setRoom]}>
+      <Room.Provider value={room}>
         <div className={styles.room}>
           <div className={styles.messages}>
             <span className={`${styles.chatMessages}`}>

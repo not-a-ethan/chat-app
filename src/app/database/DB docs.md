@@ -17,6 +17,6 @@ Name: `rooms`
 ## Messages table
 
 Name: `users`
-| Column name | `id` | `name` | `username` | `password` | `ssoPro` | `externalID` |`rooms` | `recentlyActive` |
-| - | - | - | - | - | - | - | - | - |
-| Schema | `INTEGER` (Sequental) NOT NULL UNIQUE | `TEXT` | `TEXT` NOT NULL UNIQUE | `TEXT` NOT NULL | `TEXT` | `INT` DEFAULT `-1` | `TEXT` | `INT` NOT NULL DEFAULT `-1` |
+| Column name | `id` | `name` | `username` | `password` | `ssoPro` | `externalID` |`rooms` | `recentlyActive` | `pfp` |
+| - | - | - | - | - | - | - | - | - | - |
+| Schema | `INTEGER` (Sequental) NOT NULL UNIQUE | `TEXT` | `TEXT` NOT NULL UNIQUE | `TEXT` | `TEXT` | `INT` DEFAULT `-1` | `TEXT` | `INT` NOT NULL DEFAULT `-1` | `BLOB` |

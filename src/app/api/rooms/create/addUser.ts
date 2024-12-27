@@ -7,7 +7,7 @@ export async function addUser(roomID: number, username: string) {
     const newRooms = `${currentRooms}${roomID},`;
 
     const query = `UPDATE users SET rooms=$rooms WHERE username=$username`;
-    const result = await changeDB(query, {"$rooms": newRooms, "$username": username})
+    const result = changeDB(query, {"$rooms": newRooms, "$username": username})
 
     return result;
 }

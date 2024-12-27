@@ -14,7 +14,7 @@ import styles from "./styles/chat.module.css";
 
 const Chat = forwardRef((props: any, ref: any) => {
     const [messages, setMessages] = useState(<></>);
-    const [room, setRoom] = useContext(Room);
+    const room = useContext(Room);
 
     function reaction(e: any) {
         const reactionObj = {

@@ -12,7 +12,7 @@ import { Room } from "../room";
 export default function ActiveUsers() {
     const [users, setUsers] = useState(<></>);
 
-    const [room, setRoom] = useContext(Room);
+    const room = useContext(Room);
 
     function addUser() {
       const username = prompt("Username of who you want to add:");
