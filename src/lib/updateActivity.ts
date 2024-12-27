@@ -1,7 +1,7 @@
 import { accountExists } from "./accountExists";
 import { changeDB } from "@/app/database/change";
 
-export async function updateActivity(username: String) {
+export async function updateActivity(username: string) {
     const time = Date.now();
 
     const query = "UPDATE users set recentlyActive=$time WHERE username=$username";

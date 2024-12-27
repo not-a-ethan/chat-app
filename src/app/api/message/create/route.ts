@@ -29,8 +29,8 @@ export async function POST(req: NextRequest) {
     const userID = info.id;
 
     const body = await req.json();
-    const roomID: Number = body["roomID"];
-    const messageContent: String = body["content"];
+    const roomID: number = body["roomID"];
+    const messageContent: string = body["content"];
 
     // Make sure its not the dummy room
     if (roomID == 0) {

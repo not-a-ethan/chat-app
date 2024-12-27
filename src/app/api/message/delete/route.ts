@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     const messageID = body["messageID"];
 
     // Checks to make sure the message exists & the user created thew  message
-    const messageQuery: String = `SELECT * FROM messages WHERE id=$i AND author=${id};`;
+    const messageQuery: string = `SELECT * FROM messages WHERE id=$i AND author=${id};`;
     const messageQueryAguemnts = {"$i": messageID[0]};
     const message = await getAll(messageQuery, messageQueryAguemnts);
 
@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Deletes the message
-    const query: String = "DELETE FROM messages WHERE id=$messageID AND author=$authorID"
+    const query: string = "DELETE FROM messages WHERE id=$messageID AND author=$authorID"
     const response = await changeDB(query, {$messageID: messageID[0], $authorID: id})
 
     // Updates the time the user was last active

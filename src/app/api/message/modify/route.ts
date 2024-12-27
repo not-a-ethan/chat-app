@@ -30,10 +30,10 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
     const messageID = body["messageID"];
-    const newMessageContent: String = body["content"];
+    const newMessageContent: string = body["content"];
 
     // Checks to make sure the message exists & the user created thew  message
-    const messageQuery: String = `SELECT * FROM messages WHERE id=$i AND author=${id};`;
+    const messageQuery: string = `SELECT * FROM messages WHERE id=$i AND author=${id};`;
     const messageQueryAguemnts = {"$i": messageID[0]};
     const message = await getAll(messageQuery, messageQueryAguemnts);
 
@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Updates the message
-    const query: String = `UPDATE messages SET content=$message WHERE id=$messageID AND author=${id};`;
+    const query: string = `UPDATE messages SET content=$message WHERE id=$messageID AND author=${id};`;
     const updateParams = {$message: newMessageContent, $messageID: messageID[0]}
     const response = changeDB(query, updateParams);
 

@@ -1,7 +1,7 @@
 import { updateActivity } from "./updateActivity";
 import { changeDB } from "@/app/database/change";
 
-export function createAccount(type: String, username: String, password: String|null, sso_pro: String|null, sso_id: Number|null): boolean {
+export function createAccount(type: string, username: string, password: string|null, sso_pro: string|null, sso_id: number|null): boolean {
     let query;
     if (type === "sso") {
         query = `INSERT INTO users (username, sso_pro, externalID) VALUES ('${username}', '${sso_pro}', ${sso_id});`

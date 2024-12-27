@@ -66,8 +66,8 @@ export const authOptions: NextAuthOptions = {
         async signIn({ user, account, profile, email, credentials }) {
           let type: string;
           let provider: string;
-          let externalID: Number;
-          let username: String;
+          let externalID: number;
+          let username: string;
 
           if (account?.type == 'oauth') {
             type = "sso";

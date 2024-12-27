@@ -9,7 +9,7 @@ import accountInfo from '@/utils/accountinfo'
 
 import { updateActivity } from "@/lib/updateActivity"
 
-async function removeUser(roomID: Number, userid: number) {
+async function removeUser(roomID: number, userid: number) {
     const sqlCurrentRooms = await getAll(`SELECT rooms FROM users WHERE id=$id`, {"$id": userid});
     const currentRooms = sqlCurrentRooms[0]["rooms"];
     const newRooms = currentRooms.split(",").splice(currentRooms.indexOf(roomID), 1).join(",") + ",";
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
     const username = info.username;
 
     const body = await req.json();
-    const roomID: Number = body["roomID"];
+    const roomID: number = body["roomID"];
     const removeID: number = body["userID"];
 
     // checks to see if the current user is in the room

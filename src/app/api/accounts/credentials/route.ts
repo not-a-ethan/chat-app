@@ -9,14 +9,14 @@ import { updateActivity } from "@/lib/updateActivity"
 
 export async function POST(req: NextRequest) {
     interface bodyType {
-        csrfToken: String,
-        username: String,
-        password: String
+        csrfToken: string,
+        username: string,
+        password: string
     };
 
     const body: bodyType = await req.json();
-    const username: String = body.username;
-    const password: String = body.password;
+    const username: string = body.username;
+    const password: string = body.password;
 
     const exists = await accountExists("credentials", username, -1)
 

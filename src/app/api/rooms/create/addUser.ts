@@ -1,7 +1,7 @@
 import { getAll } from "@/app/database/get"
 import { changeDB } from "@/app/database/change"
 
-export async function addUser(roomID: Number, username: String) {
+export async function addUser(roomID: number, username: string) {
     const sqlCurrentRooms = await getAll(`SELECT rooms FROM users WHERE username=$username`, {"$username": username});
     const currentRooms = sqlCurrentRooms[0]["rooms"];
     const newRooms = `${currentRooms}${roomID},`;

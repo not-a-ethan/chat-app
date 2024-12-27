@@ -29,8 +29,8 @@ export async function POST(req: NextRequest) {
     const username = info.username;
 
     const body = await req.json();
-    const roomID: Number = body["roomID"];
-    const addUsername: String = body["username"];
+    const roomID: number = body["roomID"];
+    const addUsername: string = body["username"];
 
     // checks to see if the current user is in the room
     const sqlRooms = await getAll(`SELECT rooms FROM users WHERE username='${username}';`, {});

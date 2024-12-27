@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     const rooms = info.rooms;
 
     const body = await req.json();
-    const messageID: Number = body["messageID"];
+    const messageID: number = body["messageID"];
     const reactionType: number = Number(body["reaction"]);
 
     // Gets the message from the DB
