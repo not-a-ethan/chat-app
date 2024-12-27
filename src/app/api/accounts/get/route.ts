@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { accountExists } from '@/lib/accountExists';
 import { getAll } from '@/app/database/get';
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     const username: string = searchParams?.get("username");
 

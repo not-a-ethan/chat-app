@@ -8,7 +8,7 @@ import accountInfo from '@/utils/accountinfo';
 
 import { updateActivity } from '@/lib/updateActivity';
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
     // Get info about user authentication
     const token = await getToken({ req });
 

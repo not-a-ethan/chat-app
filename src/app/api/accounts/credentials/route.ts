@@ -7,7 +7,7 @@ import { createAccount } from '@/lib/createAccount';
 import { checkCredentials } from "@/lib/checkCredentials";
 import { updateActivity } from "@/lib/updateActivity"
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
     interface bodyType {
         csrfToken: String,
         username: String,

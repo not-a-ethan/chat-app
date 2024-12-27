@@ -11,7 +11,7 @@ import { updateActivity } from "@/lib/updateActivity"
 
 import { addUser } from '../addMember/route'
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
     // Get info about user authentication
     const token = await getToken({ req })
 

@@ -7,7 +7,7 @@ import { changeDB } from '@/app/database/change'
 import accountInfo from '@/utils/accountinfo'
 import { updateActivity } from '@/lib/updateActivity'
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
     // Checks for if pfps are enabled
     if (!Boolean(process.env.allowAttachmenbts)) {
         return NextResponse.json(

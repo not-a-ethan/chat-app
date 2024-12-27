@@ -7,7 +7,7 @@ import { changeDB } from '@/app/database/change'
 import accountInfo from '@/utils/accountinfo'
 import { updateActivity } from '@/lib/updateActivity'
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
     // Get info about user authentication
     const token = await getToken({ req });
 

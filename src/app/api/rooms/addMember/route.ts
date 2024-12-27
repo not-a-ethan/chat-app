@@ -20,7 +20,7 @@ export async function addUser(roomID: Number, username: String) {
     return result;
 }
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
     // Get info about user authentication
     const token = await getToken({ req })
 
