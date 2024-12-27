@@ -5,7 +5,16 @@ import { getAll } from '@/app/database/get';
 
 export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
-    const username: string = searchParams?.get("username");
+    const username: string | null = searchParams?.get("username");
+
+    if (username === null) {
+        return NextResponse.json(
+            JSON.stringify({
+                error: "Username is null"
+            }),
+            { status: 400 }
+        )
+    }
 
     const exists = await accountExists("credentials", username, -1);
 

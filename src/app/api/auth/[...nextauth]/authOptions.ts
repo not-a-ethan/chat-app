@@ -83,7 +83,11 @@ export const authOptions: NextAuthOptions = {
 
             updateActivity(username);
           } else {
-            const username: string|null = credentials?.username;
+            const username: string | null = credentials?.username;
+
+            if (username === null) {
+              return;
+            }
 
             const response = await accountExists("credentials", username, null);
 
