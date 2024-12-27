@@ -49,7 +49,7 @@ export default function ActiveUsers() {
       }).then((response) => {
         let json = response.json();
         if (!(response.status >= 200) || !(response.status < 300)) {
-          return response.json().then(Promise.reject.bind(Promise))
+          return response.json().then(Promise.reject.bind(Promise));
         }
       });
       

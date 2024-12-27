@@ -9,20 +9,20 @@ import accountInfo from '@/utils/accountinfo'
 
 import { updateActivity } from "@/lib/updateActivity"
 
-export async function removeUser(roomID: Number, userid: String) {
+export async function removeUser(roomID: Number, userid: number) {
     const sqlCurrentRooms = await getAll(`SELECT rooms FROM users WHERE id=$id`, {"$id": userid});
     const currentRooms = sqlCurrentRooms[0]["rooms"];
     const newRooms = currentRooms.split(",").splice(currentRooms.indexOf(roomID), 1).join(",") + ",";
 
     const query = `UPDATE users SET rooms=$rooms WHERE id=$userID`;
-    const result = changeDB(query, {"$rooms": newRooms, "$userID": userid})
+    const result = changeDB(query, {"$rooms": newRooms, "$userID": userid});
 
     return result;
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
     // Get info about user authentication
-    const token = await getToken({ req })
+    const token = await getToken({ req });
 
     // Checks if user is logged in
     if (!token) {
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
                 "error": "You are not in that room"
             }),
             { status: 400 }
-        )
+        );
     }
 
     // Checks to make sure its not the dummy room
@@ -62,11 +62,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
                 error: `Hey that room is not allowed. 0 Is just to make the DB happy so every user is "in" atleast one room.`
             }),
             { status: 418 }
-        )
+        );
      }
 
     // Checks to make sure there is an actual username
-    if (removeID == "") {
+    if (removeID.toString() == "") {
         return NextResponse.json(
             JSON.stringify({
                 "error": "No id provided"
@@ -87,11 +87,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
                 "error": "Something went wrong"
             }),
             { status: 500 }
-        )
+        );
     }
 
     return NextResponse.json(
         JSON.stringify(body),
         {status: 200}
-    )
+    );
 }

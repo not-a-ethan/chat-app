@@ -1,16 +1,16 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server';
 
-import { getToken } from "next-auth/jwt"
+import { getToken } from "next-auth/jwt";
 
-import { getAll } from "@/app/database/get"
+import { getAll } from "@/app/database/get";
 
-import accountInfo from '@/utils/accountinfo'
+import accountInfo from '@/utils/accountinfo';
 
-import { updateActivity } from '@/lib/updateActivity'
+import { updateActivity } from '@/lib/updateActivity';
 
 export async function GET(req: NextRequest, res: NextResponse) {
     // Get info about user authentication
-    const token = await getToken({ req })
+    const token = await getToken({ req });
 
     // Checks if user is logged in
     if (!token) {
@@ -37,7 +37,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
                 "error": "Room ID needs to be more than 1"
             }),
             { status: 400 }
-        )
+        );
     }
 
     // Checks if user is in the room
@@ -50,14 +50,14 @@ export async function GET(req: NextRequest, res: NextResponse) {
                 "error": "Not in room"
             }),
             { status: 403 }
-        )
+        );
     }
 
     // Updates the time the user was last active
     updateActivity(username);
 
     // Users active in the past 5 min and in a specific room
-    const query = `SELECT * FROM users WHERE rooms LIKE CONCAT('%,', $room, ',%') AND recentlyActive > ((strftime('%s', 'now') * 1000) - 300000)`
+    const query = `SELECT * FROM users WHERE rooms LIKE CONCAT('%,', $room, ',%') AND recentlyActive > ((strftime('%s', 'now') * 1000) - 300000)`;
 
     let users = await getAll(query, {"$room": roomID});
     const usernames = [];
