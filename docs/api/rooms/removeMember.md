@@ -10,4 +10,4 @@ BODY:
 
 ___
 
-Adds a user from a specific room
+Removes a user from a specific room
