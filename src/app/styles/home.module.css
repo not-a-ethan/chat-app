@@ -6,3 +6,15 @@
 .list {
     list-style-position: inside;
 }
+
+.container {
+    display: grid;
+}
+
+.left {
+    grid-column: 1;
+}
+
+.right { 
+    grid-column: 2;
+}
