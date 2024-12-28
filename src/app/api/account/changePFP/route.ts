@@ -8,16 +8,6 @@ import accountInfo from '@/utils/accountinfo'
 import { updateActivity } from '@/lib/updateActivity'
 
 export async function POST(req: NextRequest) {
-    // Checks for if pfps are enabled
-    if (!Boolean(process.env.allowAttachmenbts)) {
-        return NextResponse.json(
-            JSON.stringify({
-                "error": "This instance does not allow attachments"
-            }),
-            { status: 403 }
-        )
-    }
-
     // Get info about user authentication
     const token = await getToken({ req });
 
@@ -50,6 +40,16 @@ export async function POST(req: NextRequest) {
                 "success": true
             }),
             { status: 200}
+        )
+    }
+
+    // Checks for if pfps are enabled
+    if (!Boolean(Number(process.env.allowAttachmenbts))) {
+        return NextResponse.json(
+            JSON.stringify({
+                "error": "This instance does not allow attachments"
+            }),
+            { status: 403 }
         )
     }
 
