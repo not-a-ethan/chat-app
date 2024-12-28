@@ -42,6 +42,11 @@ export default function Rooms() {
         body: JSON.stringify({
           "name": roomName
         })
+      }).then((response) => {
+        let json = response.json();
+        if (!(response.status >= 200) || !(response.status < 300)) {
+          return response.json().then(Promise.reject.bind(Promise));
+        }
       });
 
       toast.promise(createRoom, {
@@ -66,10 +71,9 @@ export default function Rooms() {
           .then(response => response.json())
           .then(jsonData => {
             jsonData = JSON.parse(jsonData)
-            if (data.status !== 200) {
-              toast.error("Something went wrong when getting rooms")
-              return;
-            }
+              if (!(data.status >= 200) || !(data.status < 300)) {
+                return jsonData.then(Promise.reject.bind(Promise));
+              }
     
             let rooms = jsonData["rooms"];
             let names = jsonData["names"];

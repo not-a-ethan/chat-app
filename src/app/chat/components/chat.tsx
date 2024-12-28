@@ -52,6 +52,11 @@ const Chat = forwardRef((props: any, ref: any) => {
                 messageID: messageID,
                 content: newContent
             })
+        }).then((response) => {
+            let json = response.json();
+            if (!(response.status >= 200) || !(response.status < 300)) {
+                return response.json().then(Promise.reject.bind(Promise));
+            }
         });
 
         toast.promise(response, {
@@ -75,6 +80,11 @@ const Chat = forwardRef((props: any, ref: any) => {
             body: JSON.stringify({
                 messageID: messageID,
             })
+        }).then((response) => {
+            let json = response.json();
+            if (!(response.status >= 200) || !(response.status < 300)) {
+              return response.json().then(Promise.reject.bind(Promise));
+            }
         });
 
         toast.promise(response, {

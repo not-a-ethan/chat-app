@@ -26,6 +26,11 @@ export default function EditPassword() {
                 "password": newPassword,
                 "currentPassword": currentPassowrd
             })
+        }).then((response) => {
+            let json = response.json();
+            if (!(response.status >= 200) || !(response.status < 300)) {
+              return response.json().then(Promise.reject.bind(Promise));
+            }
         });
 
         toast.promise(promise, {

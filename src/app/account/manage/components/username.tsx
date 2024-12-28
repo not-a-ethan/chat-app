@@ -16,6 +16,11 @@ export default function EditUsername() {
             body: JSON.stringify({
                 "username": newUsername
             })
+        }).then((response) => {
+            let json = response.json();
+            if (!(response.status >= 200) || !(response.status < 300)) {
+              return response.json().then(Promise.reject.bind(Promise));
+            }
         });
 
         toast.promise(promise, {

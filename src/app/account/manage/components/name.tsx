@@ -16,6 +16,11 @@ export default function EditName() {
             body: JSON.stringify({
                 "name": newName
             })
+        }).then((response) => {
+            let json = response.json();
+            if (!(response.status >= 200) || !(response.status < 300)) {
+              return response.json().then(Promise.reject.bind(Promise));
+            }
         });
 
         toast.promise(promise, {

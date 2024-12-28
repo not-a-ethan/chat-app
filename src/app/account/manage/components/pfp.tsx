@@ -21,6 +21,11 @@ export default function EditPfp() {
                     "pfp": image,
                     "removing": false
                 })
+            }).then((response) => {
+                let json = response.json();
+                if (!(response.status >= 200) || !(response.status < 300)) {
+                  return response.json().then(Promise.reject.bind(Promise));
+                }
             });
     
             toast.promise(promise, {
@@ -39,6 +44,11 @@ export default function EditPfp() {
                 "pfp": null,
                 "removing": true
             })
+        }).then((response) => {
+            let json = response.json();
+            if (!(response.status >= 200) || !(response.status < 300)) {
+              return response.json().then(Promise.reject.bind(Promise));
+            }
         });
 
         toast.promise(promise, {

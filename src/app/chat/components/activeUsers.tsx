@@ -26,7 +26,12 @@ export default function ActiveUsers() {
           "roomID": room,
           "username": username
         })
-      });
+      }).then((response) => {
+        let json = response.json();
+        if (!(response.status >= 200) || !(response.status < 300)) {
+          return response.json().then(Promise.reject.bind(Promise));
+        }
+      });;
       
       toast.promise(addUser, {
         loading: "Adding user",
@@ -70,6 +75,11 @@ export default function ActiveUsers() {
           "roomID": room,
           "userID": id
         })
+      }).then((response) => {
+        let json = response.json();
+        if (!(response.status >= 200) || !(response.status < 300)) {
+          return response.json().then(Promise.reject.bind(Promise));
+        }
       });
       
       toast.promise(addUser, {
