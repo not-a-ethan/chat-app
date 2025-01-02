@@ -5,6 +5,8 @@ import { getToken } from "next-auth/jwt"
 import { getAll } from "@/app/database/get"
 import { changeDB } from "@/app/database/change"
 
+import { filter } from '../filter'
+
 import accountInfo from '@/utils/accountinfo'
 
 import { updateActivity } from "@/lib/updateActivity"
@@ -44,6 +46,15 @@ export async function POST(req: NextRequest) {
             }),
             { status: 403 }
         );
+    }
+
+    if (!filter(newMessageContent)) {
+        return NextResponse.json(
+            JSON.stringify({
+                "error": "That does not pass the filter"
+            }),
+            { status: 400 }
+        )
     }
 
     // Updates the message

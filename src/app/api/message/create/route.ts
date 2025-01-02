@@ -5,6 +5,8 @@ import { getToken } from "next-auth/jwt";
 import { getAll } from "@/app/database/get";
 import { changeDB } from "@/app/database/change";
 
+import { filter } from '../filter';
+
 import accountInfo from '@/utils/accountinfo';
 
 import { updateActivity } from "@/lib/updateActivity";
@@ -52,6 +54,14 @@ export async function POST(req: NextRequest) {
         )
     }
 
+    if (!(await filter(messageContent))) {
+        return NextResponse.json(
+            JSON.stringify({
+                "error": "That does not pass the filter"
+            }),
+            { status: 400 }
+        )
+    }
 
     // Gets all the rooms the user is in, and makes sure the messagee is for one of htose rooms
     let rooms = await getAll(`SELECT * FROM users WHERE username=$username`, {"$username": username});

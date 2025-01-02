@@ -35,4 +35,5 @@ GITHUB_SECRET=<GITHUB AUTH SECRET>
 
 # Site Config
 allowAttachmenbts=<0 to not allow, 1 to allow>
+filter=<comma sperated list of banned phrases>
 ```
