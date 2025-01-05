@@ -1,24 +1,41 @@
 # Chat app
 
-Chat app with a similer concept to discord. Still a WIP and has many un-finshed features
+Chat app with a similer concept to discord.
 
-## Getting Started
+## Features
 
-First, run the development server:
+- Accounts
+  - Create
+  - Change username
+  - Change password
+  - Change pfp
+  - Change name
+- Rooms
+    - Create
+    - Add memember
+    - Remove member
+    - Delete
+- Messages
+    - Create
+    - Edit
+    - React
+    - Delete
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Development
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Tech Stack
 
-Also make sure you make the db. The docs for the db layout is located at '/src/app/database/DB docs.md'
+This project uses a few diffrent frameworks and liberies.
+
+- Next.js
+- NextUI
+- Next Auth
+- SQLite DB
+- Bcrypt
+
+### Getting Started
+
+Make sure you make the db. The docs for the db layout is located at '/src/app/database/DB docs.md' and the `.env` file (docs below)
 
 ___
 
@@ -37,3 +54,19 @@ GITHUB_SECRET=<GITHUB AUTH SECRET>
 allowAttachmenbts=<0 to not allow, 1 to allow>
 filter=<comma sperated list of banned phrases>
 ```
+
+### Running the program
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
